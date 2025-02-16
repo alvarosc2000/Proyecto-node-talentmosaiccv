@@ -12,7 +12,7 @@ app.use(helmet());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("TalentMosaic AI Backend Running...");
+  res.send("TalentMosaicCV AI Backend Running...");
 });
 
 const PORT = process.env.PORT || 5000;
