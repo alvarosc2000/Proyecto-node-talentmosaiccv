@@ -1,0 +1,8 @@
+node_modules
+dist
+.env
+.git
+!wait-for-it.sh
+!Dockerfile
+!package.json
+!package-lock.json
