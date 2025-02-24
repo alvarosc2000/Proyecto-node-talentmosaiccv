@@ -11,3 +11,9 @@ npx ts-node backend/src/app.ts
 
 node_modules: Contiene dependencias de tu proyecto (paquetes instalados).
 dist: Contiene la versión compilada de tu código (archivos .js generados desde .ts).
+
+
+
+4. npx drizzle-kit generate
+5. npx drizzle-kit migrate
+6. npx drizzle-kit seed

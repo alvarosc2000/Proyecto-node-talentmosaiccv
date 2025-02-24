@@ -25,6 +25,8 @@
     "@types/node": "^22.13.4",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
+    "drizzle-kit": "^0.30.4",
+    "drizzle-orm": "^0.39.3",
     "nodemon": "^3.1.9",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
