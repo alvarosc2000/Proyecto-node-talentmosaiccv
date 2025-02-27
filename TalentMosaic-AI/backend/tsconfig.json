@@ -5,8 +5,9 @@
     "rootDir": "./src",
     "moduleResolution": "node",
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "skipLibCheck": true
   },
-  "include": ["src", "drizzle.config.ts"],  
+  "include": ["src", "src/drizzle.config.ts"],  
   "exclude": ["node_modules"]
 }
