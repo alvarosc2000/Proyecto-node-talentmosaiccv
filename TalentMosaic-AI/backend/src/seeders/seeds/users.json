@@ -1,0 +1,23 @@
+[
+    {
+      "id": "a791db68-7f66-4895-b58e-d02454430d20",
+      "companyId": "ba8c9329-fe55-48fa-b81d-5a08fdb7bb8c",
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john.doe@techcorp.com",
+      "password": "hashedpassword1",
+      "role": "recruiter",
+      "linkedInToken": "linkedin_oauth_token_123"
+    },
+    {
+      "id": "672efac3-7228-4536-ab62-805a9a3cc6cf",
+      "companyId": "e389cd16-fb04-4f92-89b0-f53f7399b4f7",
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "email": "jane.smith@innovatex.com",
+      "password": "hashedpassword2",
+      "role": "manager",
+      "linkedInToken": null
+    }
+  ]
+  

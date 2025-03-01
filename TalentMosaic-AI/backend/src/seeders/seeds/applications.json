@@ -1,0 +1,19 @@
+[
+    {
+      "id": "b79893b1-bc9d-4490-b862-2431b4e2906b",
+      "candidateId": "6a3d05fb-62b8-4331-a510-a40d8cb6c587",
+      "jobId": "9e587363-6bab-4753-8674-546fae482321",
+      "status": "pending",
+      "score": 85,
+      "compatibility": 90.5
+    },
+    {
+      "id": "464e3829-3436-42d2-8e02-d5d34e18bb63",
+      "candidateId": "d7ce3f5b-b1ae-4922-a1ab-03c01a0a910d",
+      "jobId": "7f160a16-a9a4-4739-a746-f74ba562ecdf",
+      "status": "interview",
+      "score": 75,
+      "compatibility": 85.0
+    }
+  ]
+  

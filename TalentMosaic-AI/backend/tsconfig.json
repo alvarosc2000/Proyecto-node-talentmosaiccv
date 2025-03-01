@@ -1,13 +1,19 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "moduleResolution": "node",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true
+    "target": "ES2020",             // Utilizar una versión más reciente de ECMAScript
+    "module": "ESNext",             // Habilitar soporte para módulos ES
+    "outDir": "./dist",             // Directorio donde se colocarán los archivos compilados
+    "rootDir": "./src",             // Directorio raíz donde se encuentra tu código fuente
+    "moduleResolution": "node",     // Resolución de módulos basada en Node.js
+    "strict": true,                 // Habilitar todas las comprobaciones estrictas
+    "esModuleInterop": true,        // Habilitar compatibilidad con CommonJS
+    "skipLibCheck": true            // Saltar la comprobación de tipos de las bibliotecas
   },
-  "include": ["src", "src/drizzle.config.ts"],  
-  "exclude": ["node_modules"]
+  "include": [
+    "src",                          // Incluir toda la carpeta src
+    "src/drizzle.config.ts"          // Asegurarse de incluir el archivo de configuración de drizzle
+  ],
+  "exclude": [
+    "node_modules"                  // Excluir la carpeta node_modules
+  ]
 }

@@ -18,16 +18,16 @@ var __copyProps = (to, from, except, desc) => {
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var session_exports = {};
 __export(session_exports, {
+  MySqlPreparedQuery: () => MySqlPreparedQuery,
   MySqlSession: () => MySqlSession,
-  MySqlTransaction: () => MySqlTransaction,
-  PreparedQuery: () => PreparedQuery
+  MySqlTransaction: () => MySqlTransaction
 });
 module.exports = __toCommonJS(session_exports);
 var import_entity = require("../entity.cjs");
 var import_errors = require("../errors.cjs");
 var import_sql = require("../sql/sql.cjs");
 var import_db = require("./db.cjs");
-class PreparedQuery {
+class MySqlPreparedQuery {
   static [import_entity.entityKind] = "MySqlPreparedQuery";
   /** @internal */
   joinsNotNullableMap;
@@ -43,12 +43,18 @@ class MySqlSession {
       void 0
     ).execute();
   }
+  async count(sql2) {
+    const res = await this.execute(sql2);
+    return Number(
+      res[0][0]["count"]
+    );
+  }
   getSetTransactionSQL(config) {
     const parts = [];
     if (config.isolationLevel) {
       parts.push(`isolation level ${config.isolationLevel}`);
     }
-    return parts.length ? import_sql.sql.join(["set transaction ", parts.join(" ")]) : void 0;
+    return parts.length ? import_sql.sql`set transaction ${import_sql.sql.raw(parts.join(" "))}` : void 0;
   }
   getStartTransactionSQL(config) {
     const parts = [];
@@ -58,7 +64,7 @@ class MySqlSession {
     if (config.accessMode) {
       parts.push(config.accessMode);
     }
-    return parts.length ? import_sql.sql.join(["start transaction ", parts.join(" ")]) : void 0;
+    return parts.length ? import_sql.sql`start transaction ${import_sql.sql.raw(parts.join(" "))}` : void 0;
   }
 }
 class MySqlTransaction extends import_db.MySqlDatabase {
@@ -74,8 +80,8 @@ class MySqlTransaction extends import_db.MySqlDatabase {
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
+  MySqlPreparedQuery,
   MySqlSession,
-  MySqlTransaction,
-  PreparedQuery
+  MySqlTransaction
 });
 //# sourceMappingURL=session.cjs.map

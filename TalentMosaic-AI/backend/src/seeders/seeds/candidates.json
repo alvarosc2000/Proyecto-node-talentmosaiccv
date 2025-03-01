@@ -1,0 +1,25 @@
+[
+    {
+      "id": "6a3d05fb-62b8-4331-a510-a40d8cb6c587",
+      "companyId": "ba8c9329-fe55-48fa-b81d-5a08fdb7bb8c",
+      "source": "linkedin",
+      "linkedinProfile": "https://www.linkedin.com/in/john-doe/",
+      "resume": {"summary": "Experienced software engineer with expertise in backend development."},
+      "skills": "JavaScript, Node.js, PostgreSQL, Docker",
+      "experience": 5,
+      "education": "BSc Computer Science",
+      "location": "San Francisco, CA"
+    },
+    {
+      "id": "d7ce3f5b-b1ae-4922-a1ab-03c01a0a910d",
+      "companyId": "e389cd16-fb04-4f92-89b0-f53f7399b4f7",
+      "source": "cv_upload",
+      "linkedinProfile": null,
+      "resume": {"summary": "Product manager with 8 years of experience in the tech industry."},
+      "skills": "Product Management, Agile, UX/UI Design",
+      "experience": 8,
+      "education": "MBA, Marketing",
+      "location": "New York, NY"
+    }
+  ]
+  

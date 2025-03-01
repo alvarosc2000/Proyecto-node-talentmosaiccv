@@ -23,6 +23,7 @@ export declare class LibSQLSession<TFullSchema extends Record<string, unknown>, 
     constructor(client: Client, dialect: SQLiteAsyncDialect, schema: RelationalSchemaConfig<TSchema> | undefined, options: LibSQLSessionOptions, tx: Transaction | undefined);
     prepareQuery<T extends Omit<PreparedQueryConfig, 'run'>>(query: Query, fields: SelectedFieldsOrdered | undefined, executeMethod: SQLiteExecuteMethod, isResponseInArrayMode: boolean, customResultMapper?: (rows: unknown[][]) => unknown): LibSQLPreparedQuery<T>;
     batch<T extends BatchItem<'sqlite'>[] | readonly BatchItem<'sqlite'>[]>(queries: T): Promise<unknown[]>;
+    migrate<T extends BatchItem<'sqlite'>[] | readonly BatchItem<'sqlite'>[]>(queries: T): Promise<unknown[]>;
     transaction<T>(transaction: (db: LibSQLTransaction<TFullSchema, TSchema>) => T | Promise<T>, _config?: SQLiteTransactionConfig): Promise<T>;
     extractRawAllValueFromBatchResult(result: unknown): unknown;
     extractRawGetValueFromBatchResult(result: unknown): unknown;
@@ -47,7 +48,7 @@ export declare class LibSQLPreparedQuery<T extends PreparedQueryConfig = Prepare
     static readonly [entityKind]: string;
     constructor(client: Client, query: Query, logger: Logger, 
     /** @internal */ fields: SelectedFieldsOrdered | undefined, tx: Transaction | undefined, executeMethod: SQLiteExecuteMethod, _isResponseInArrayMode: boolean, 
-    /** @internal */ customResultMapper?: ((rows: unknown[][], mapColumnValue?: ((value: unknown) => unknown) | undefined) => unknown) | undefined);
+    /** @internal */ customResultMapper?: ((rows: unknown[][], mapColumnValue?: (value: unknown) => unknown) => unknown) | undefined);
     run(placeholderValues?: Record<string, unknown>): Promise<ResultSet>;
     all(placeholderValues?: Record<string, unknown>): Promise<T['all']>;
     mapAllResult(rows: unknown, isFromBatch?: boolean): unknown;
