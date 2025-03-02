@@ -1,0 +1,33 @@
+# Esquema de Usuario
+type User {
+  id: ID!
+  firstName: String
+  lastName: String
+  email: String
+  role: String
+  linkedInToken: String
+  createdAt: String
+  updatedAt: String
+}
+
+# Entrada para crear o actualizar un usuario
+input CreateUserInput {
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  role: String
+}
+
+# Definición de Queries
+type Query {
+  getAllUsers: [User]
+  getUserById(id: ID!): User
+}
+
+# Definición de Mutations
+type Mutation {
+  createUser(input: CreateUserInput): User
+  updateUser(id: ID!, input: CreateUserInput): User
+  deleteUser(id: ID!): Boolean
+}

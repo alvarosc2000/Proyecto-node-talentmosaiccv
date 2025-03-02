@@ -18,7 +18,7 @@ BEGIN
 END $$;
 
 -- Eliminar las tablas
-DROP TABLE IF EXISTS candidate_feedbacks CASCADE;
+DROP TABLE IF EXISTS candidate_feedback CASCADE;
 DROP TABLE IF EXISTS candidate_rankings CASCADE;
 DROP TABLE IF EXISTS candidates CASCADE;
 DROP TABLE IF EXISTS applications CASCADE;

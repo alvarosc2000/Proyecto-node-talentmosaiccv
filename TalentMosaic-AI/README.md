@@ -4,7 +4,7 @@
 npx ts-node backend/src/app.ts
 
 
-2. generar la carpeta dist --> desde backend --> npx tsc
+2. generar la carpeta dist --> desde backend -->  npx tsc
 
 3. npm install para node_modules
 

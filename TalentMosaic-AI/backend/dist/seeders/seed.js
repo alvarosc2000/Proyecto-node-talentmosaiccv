@@ -27,12 +27,12 @@ const seedDatabase = async () => {
         console.log("📥 Conectado a la base de datos");
         console.log("📂 Cargando datos JSON...");
         const companies = loadJson("./company.json");
-        const users = loadJson("users.json");
-        const candidates = loadJson("candidates.json");
-        const jobs = loadJson("jobs.json");
-        const applications = loadJson("applications.json");
-        const candidateRankings = loadJson("candidate_rankings.json");
-        const candidateFeedbacks = loadJson("candidate_feedback.json");
+        const users = loadJson("./users.json");
+        const candidates = loadJson("./candidates.json");
+        const jobs = loadJson("./jobs.json");
+        const applications = loadJson("./applications.json");
+        const candidateRankings = loadJson("./candidate_rankings.json");
+        const candidateFeedbacks = loadJson("./candidate_feedback.json");
         console.log("🚀 Insertando datos...");
         await db.insert(Company).values(companies);
         await db.insert(User).values(users);
