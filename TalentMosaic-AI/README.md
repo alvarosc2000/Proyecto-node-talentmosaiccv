@@ -106,6 +106,7 @@ TalentMosaicCV es una plataforma basada en inteligencia artificial diseñada par
    npx tsc
    npx drizzle-kit generate
    npx drizzle-kit migrate
+   npx tsx src/seeders/seed.ts
    ```
 
 5. **Inicia el frontend**:
