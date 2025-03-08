@@ -113,6 +113,7 @@ TalentMosaicCV es una plataforma basada en inteligencia artificial diseñada par
    ```bash
    npm run build
    npm run start
+   npm run dev
 
 
    npm run serve
