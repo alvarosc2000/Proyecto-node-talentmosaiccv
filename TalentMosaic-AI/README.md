@@ -97,6 +97,7 @@ TalentMosaicCV es una plataforma basada en inteligencia artificial diseñada par
 
 3. **Inicia el backend**:
    ```bash
+   npx tsx src/app.ts
    npx ts-node backend/src/app.ts
    ```
 
