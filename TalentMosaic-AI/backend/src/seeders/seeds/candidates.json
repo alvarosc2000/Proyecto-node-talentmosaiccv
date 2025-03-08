@@ -1,25 +1,57 @@
 [
-    {
-      "id": "6a3d05fb-62b8-4331-a510-a40d8cb6c587",
-      "companyId": "ba8c9329-fe55-48fa-b81d-5a08fdb7bb8c",
-      "source": "linkedin",
-      "linkedinProfile": "https://www.linkedin.com/in/john-doe/",
-      "resume": {"summary": "Experienced software engineer with expertise in backend development."},
-      "skills": "JavaScript, Node.js, PostgreSQL, Docker",
-      "experience": 5,
-      "education": "BSc Computer Science",
-      "location": "San Francisco, CA"
-    },
-    {
-      "id": "d7ce3f5b-b1ae-4922-a1ab-03c01a0a910d",
-      "companyId": "e389cd16-fb04-4f92-89b0-f53f7399b4f7",
-      "source": "cv_upload",
-      "linkedinProfile": null,
-      "resume": {"summary": "Product manager with 8 years of experience in the tech industry."},
-      "skills": "Product Management, Agile, UX/UI Design",
-      "experience": 8,
-      "education": "MBA, Marketing",
-      "location": "New York, NY"
-    }
-  ]
-  
+  {
+    "id": "6a3d05fb-62b8-4331-a510-a40d8cb6c587",
+    "companyId": "ba8c9329-fe55-48fa-b81d-5a08fdb7bb8c",
+    "source": "linkedin",
+    "linkedinProfile": "https://www.linkedin.com/in/john-doe/",
+    "resume": {"summary": "Experienced software engineer with expertise in backend development."},
+    "skills": "JavaScript, Node.js, PostgreSQL, Docker",
+    "experience": 5,
+    "education": "BSc Computer Science",
+    "location": "San Francisco, CA"
+  },
+  {
+    "id": "d7ce3f5b-b1ae-4922-a1ab-03c01a0a910d",
+    "companyId": "e389cd16-fb04-4f92-89b0-f53f7399b4f7",
+    "source": "cv_upload",
+    "linkedinProfile": null,
+    "resume": {"summary": "Product manager with 8 years of experience in the tech industry."},
+    "skills": "Product Management, Agile, UX/UI Design",
+    "experience": 8,
+    "education": "MBA, Marketing",
+    "location": "New York, NY"
+  },
+  {
+    "id": "14c25d65-22de-400e-b5d7-e26338327299",
+    "companyId": "ba8c9329-fe55-48fa-b81d-5a08fdb7bb8c",
+    "source": "linkedin",
+    "linkedinProfile": "https://www.linkedin.com/in/alice-jones/",
+    "resume": {"summary": "Software engineer specializing in frontend development."},
+    "skills": "React, Redux, CSS, HTML5",
+    "experience": 4,
+    "education": "BSc Information Systems",
+    "location": "Austin, TX"
+  },
+  {
+    "id": "b16d99a5-51ba-4f6f-bb4f-b8f6f213e612",
+    "companyId": "e389cd16-fb04-4f92-89b0-f53f7399b4f7",
+    "source": "linkedin",
+    "linkedinProfile": "https://www.linkedin.com/in/mark-thomas/",
+    "resume": {"summary": "Senior software developer with experience in DevOps and cloud systems."},
+    "skills": "AWS, Terraform, Docker, Kubernetes",
+    "experience": 7,
+    "education": "MSc Cloud Computing",
+    "location": "Chicago, IL"
+  },
+  {
+    "id": "c02a1394-47ea-41b2-bf59-f28d6b56ccf3",
+    "companyId": "ba8c9329-fe55-48fa-b81d-5a08fdb7bb8c",
+    "source": "linkedin",
+    "linkedinProfile": "https://www.linkedin.com/in/david-clark/",
+    "resume": {"summary": "Data scientist with a passion for AI and machine learning."},
+    "skills": "Python, TensorFlow, SQL, Machine Learning",
+    "experience": 3,
+    "education": "BSc Data Science",
+    "location": "Seattle, WA"
+  }
+]

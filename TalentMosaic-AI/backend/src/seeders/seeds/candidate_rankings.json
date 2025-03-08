@@ -1,15 +1,32 @@
 [
-    {
-      "id": "fad1730d-d6e6-4933-99f2-155d2f2dfd7d",
-      "applicationId": "b79893b1-bc9d-4490-b862-2431b4e2906b",
-      "score": 85,
-      "ranking": 1
-    },
-    {
-      "id": "27639f23-3cba-4da8-b214-8739ea8c5286",
-      "applicationId": "464e3829-3436-42d2-8e02-d5d34e18bb63",
-      "score": 75,
-      "ranking": 2
-    }
-  ]
-  
+  {
+    "id": "fad1730d-d6e6-4933-99f2-155d2f2dfd7d",
+    "applicationId": "b79893b1-bc9d-4490-b862-2431b4e2906b",
+    "score": 85,
+    "ranking": 1
+  },
+  {
+    "id": "27639f23-3cba-4da8-b214-8739ea8c5286",
+    "applicationId": "464e3829-3436-42d2-8e02-d5d34e18bb63",
+    "score": 75,
+    "ranking": 2
+  },
+  {
+    "id": "fd230f3a-d40b-4b1b-855b-df7592d1e684",
+    "applicationId": "6f65e52b-4c47-45f5-b7fd-6be462cc35a3",
+    "score": 90,
+    "ranking": 1
+  },
+  {
+    "id": "884bbec2-87da-4a56-8c2f-cce82c70c16d",
+    "applicationId": "98bfa9ba-d6e2-4639-855b-8b23bba92f91",
+    "score": 78,
+    "ranking": 3
+  },
+  {
+    "id": "2f3c3b23-3a55-4c75-91b1-87631d6f4010",
+    "applicationId": "e5b07a87-3e60-4a9f-b604-764b89f87c75",
+    "score": 55,
+    "ranking": 4
+  }
+]

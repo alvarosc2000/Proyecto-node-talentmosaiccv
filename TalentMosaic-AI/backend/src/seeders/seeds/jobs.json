@@ -1,25 +1,57 @@
 [
-    {
-      "id": "9e587363-6bab-4753-8674-546fae482321",
-      "companyId": "ba8c9329-fe55-48fa-b81d-5a08fdb7bb8c",
-      "jobTitle": "Backend Developer",
-      "description": "We are looking for an experienced Backend Developer to join our engineering team.",
-      "location": "San Francisco, CA",
-      "experienceRequired": 3,
-      "skillsRequired": "JavaScript, Node.js, PostgreSQL",
-      "educationRequired": "BSc in Computer Science",
-      "salaryRange": "$80,000 - $100,000"
-    },
-    {
-      "id": "7f160a16-a9a4-4739-a746-f74ba562ecdf",
-      "companyId": "e389cd16-fb04-4f92-89b0-f53f7399b4f7",
-      "jobTitle": "Product Manager",
-      "description": "Join us as a Product Manager to lead projects and build solutions in the tech industry.",
-      "location": "New York, NY",
-      "experienceRequired": 5,
-      "skillsRequired": "Product Management, Agile, UX/UI Design",
-      "educationRequired": "MBA in Marketing",
-      "salaryRange": "$90,000 - $120,000"
-    }
-  ]
-  
+  {
+    "id": "9e587363-6bab-4753-8674-546fae482321",
+    "companyId": "ba8c9329-fe55-48fa-b81d-5a08fdb7bb8c",
+    "jobTitle": "Backend Developer",
+    "description": "We are looking for an experienced Backend Developer to join our engineering team.",
+    "location": "San Francisco, CA",
+    "experienceRequired": 3,
+    "skillsRequired": "JavaScript, Node.js, PostgreSQL",
+    "salary": 95000,
+    "type": "full-time"
+  },
+  {
+    "id": "7f160a16-a9a4-4739-a746-f74ba562ecdf",
+    "companyId": "e389cd16-fb04-4f92-89b0-f53f7399b4f7",
+    "jobTitle": "Product Manager",
+    "description": "Join our team to manage exciting new product initiatives.",
+    "location": "New York, NY",
+    "experienceRequired": 5,
+    "skillsRequired": "Product Management, Agile",
+    "salary": 120000,
+    "type": "full-time"
+  },
+  {
+    "id": "62a7a68e-f1fb-4a7d-8f49-016cbe56f8ef",
+    "companyId": "56ab70c2-85c1-4db1-8f5a-3e6f60a8b679",
+    "jobTitle": "Frontend Developer",
+    "description": "Develop and maintain high-quality frontend web applications.",
+    "location": "Austin, TX",
+    "experienceRequired": 2,
+    "skillsRequired": "React, Redux, CSS",
+    "salary": 85000,
+    "type": "full-time"
+  },
+  {
+    "id": "3b5a734f-c746-4fc7-a5cf-77e07234b2db",
+    "companyId": "cbf3020e-79a9-49e6-bf7b-662544fead6a",
+    "jobTitle": "Cloud Engineer",
+    "description": "Work on the development and maintenance of cloud infrastructure.",
+    "location": "Seattle, WA",
+    "experienceRequired": 4,
+    "skillsRequired": "AWS, Terraform",
+    "salary": 105000,
+    "type": "full-time"
+  },
+  {
+    "id": "8c5a5c55-3fcb-4c7f-86f2-84b2251cb466",
+    "companyId": "9d0b8a34-b5ae-453a-b79b-d1cc28c03259",
+    "jobTitle": "UX/UI Designer",
+    "description": "We are looking for a talented UX/UI Designer to improve user experience.",
+    "location": "Chicago, IL",
+    "experienceRequired": 3,
+    "skillsRequired": "Figma, Sketch, Adobe XD",
+    "salary": 95000,
+    "type": "full-time"
+  }
+]

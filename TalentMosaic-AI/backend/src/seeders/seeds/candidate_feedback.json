@@ -1,15 +1,32 @@
 [
-    {
-      "id": "e730d5ed-2e87-4be9-a5dd-71b1958bf787",
-      "applicationId": "b79893b1-bc9d-4490-b862-2431b4e2906b",
-      "feedback": "Great candidate with strong technical skills.",
-      "rating": 4
-        },
-    {
-      "id": "405de53d-fb99-41ac-9f36-a8598aa3e9c0",
-      "applicationId": "464e3829-3436-42d2-8e02-d5d34e18bb63",
-      "feedback": "Good fit but lacking experience in Agile methodologies.",
-      "rating": 3
-    }
-  ]
-  
+  {
+    "id": "e730d5ed-2e87-4be9-a5dd-71b1958bf787",
+    "applicationId": "b79893b1-bc9d-4490-b862-2431b4e2906b",
+    "feedback": "Great candidate with strong technical skills.",
+    "rating": 4
+  },
+  {
+    "id": "405de53d-fb99-41ac-9f36-a8598aa3e9c0",
+    "applicationId": "464e3829-3436-42d2-8e02-d5d34e18bb63",
+    "feedback": "Good fit but lacking experience in Agile methodologies.",
+    "rating": 3
+  },
+  {
+    "id": "2b385e5d-f033-4b7f-8a4c-bd0649f1b71f",
+    "applicationId": "6f65e52b-4c47-45f5-b7fd-6be462cc35a3",
+    "feedback": "Impressive technical abilities, excellent fit for the position.",
+    "rating": 5
+  },
+  {
+    "id": "7cf93b65-daf6-48ad-b5fc-7082d7a63ab3",
+    "applicationId": "98bfa9ba-d6e2-4639-855b-8b23bba92f91",
+    "feedback": "Good candidate with some weaknesses in communication skills.",
+    "rating": 3
+  },
+  {
+    "id": "f01f50fd-f717-4c9e-8b79-4a74a92c92b3",
+    "applicationId": "e5b07a87-3e60-4a9f-b604-764b89f87c75",
+    "feedback": "Candidate lacks some technical skills required for the role.",
+    "rating": 2
+  }
+]
