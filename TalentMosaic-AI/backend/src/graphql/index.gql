@@ -1,0 +1,196 @@
+# Esquema de Usuario
+type User {
+  id: ID!
+  firstName: String
+  lastName: String
+  email: String
+  role: String
+  linkedInToken: String
+  createdAt: String
+  updatedAt: String
+}
+
+# Entrada para crear o actualizar un usuario
+input CreateUserInput {
+  id: ID!
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  role: String
+}
+
+type Company{
+    id: ID
+    name: String
+    industry: String
+    size: Int
+    createdAt: String
+    updatedAt: String    
+}
+
+input CreateCompanyInput{
+    name: String
+    industry: String
+    size: Int
+}
+
+scalar JSON
+
+type Candidate {
+    id: ID!
+    companyId: ID!
+    source: String
+    linkedinProfile: String
+    resume: JSON
+    skills: String
+    experience: Int
+    education: String
+    location: String
+    createdAt: String
+    updatedAt: String
+  }
+
+  # Entrada para crear o actualizar un candidato
+  input CreateCandidateInput {
+    companyId: ID!
+    source: String!
+    linkedinProfile: String
+    resume: JSON
+    skills: String
+    experience: Int
+    education: String
+    location: String
+  }
+
+type CandidateRanking {
+    id: ID!
+    applicationId: ID!
+    score: Int
+    ranking: Int
+    createdAt: String
+  }
+
+  # Entrada para crear o actualizar un ranking de candidato
+  input CreateRankingInput {
+    applicationId: ID!
+    score: Int!
+    ranking: Int!
+  }
+
+ # Esquema de CandidateFeedback
+  type CandidateFeedback {
+    id: ID!
+    applicationId: ID!
+    feedback: String
+    rating: Int
+    createdAt: String
+  }
+
+  # Entrada para crear o actualizar un feedback de candidato
+  input CreateFeedbackInput {
+    applicationId: ID!
+    feedback: String!
+    rating: Int!
+  }
+
+type Job {
+    id: ID!
+    companyId: ID
+    jobTitle: String
+    description: String
+    location: String
+    experienceRequired: Int
+    skillsRequired: String
+    educationRequired: String
+    salaryRange: String
+    createdAt: String
+    updatedAt: String
+  }
+
+  # Entrada para crear o actualizar un trabajo
+  input CreateJobInput {
+    companyId: ID!
+    jobTitle: String!
+    description: String!
+    location: String!
+    experienceRequired: Int!
+    skillsRequired: String!
+    educationRequired: String!
+    salaryRange: String!
+  }
+
+ # Esquema de Application
+  type Application {
+    id: ID!
+    candidateId: ID!
+    jobId: ID!
+    status: String
+    score: Int
+    compatibility: Float
+    createdAt: String
+    updatedAt: String
+  }
+
+  # Entrada para crear o actualizar una aplicación
+  input CreateApplicationInput {
+    candidateId: ID!
+    jobId: ID!
+    status: String
+    score: Int
+    compatibility: Float
+  }
+
+
+type Query {
+  getAllUsers: [User]
+  getUserById(id: ID!): User
+
+  getAllCompanies: [Company]
+  getCompany(id: ID!): Company
+
+  getAllJobs: [Job]
+  getJobById(id: ID!): Job
+
+  getAllApplications: [Application]
+  getApplicationById(id: ID!): Application
+
+  getAllCandidates: [Candidate]
+  getCandidateById(id: ID!): Candidate
+
+  getAllRankings: [CandidateRanking]
+  getRankingById(id: ID!): CandidateRanking
+
+  getAllFeedbacks: [CandidateFeedback]
+  getFeedbackById(id: ID!): CandidateFeedback
+}
+
+type Mutation {
+  createUser(input: CreateUserInput): User
+  updateUser(id: ID!, input: CreateUserInput): User
+  deleteUser(id: ID!): Boolean
+
+  createJob(input: CreateJobInput): Job
+  updateJob(id: ID!, input: CreateJobInput): Job
+  deleteJob(id: ID!): Boolean
+
+  createCompany(input: CreateCompanyInput): Company
+  updateCompany(id: ID!, input: CreateCompanyInput): Company
+  deleteCompany(id: ID!): Boolean
+
+  createCandidate(input: CreateCandidateInput): Candidate
+  updateCandidate(id: ID!, input: CreateCandidateInput): Candidate
+  deleteCandidate(id: ID!): Boolean
+
+  createApplication(input: CreateApplicationInput): Application
+  updateApplication(id: ID!, input: CreateApplicationInput): Application
+  deleteApplication(id: ID!): Boolean
+
+  createRanking(input: CreateRankingInput): CandidateRanking
+  updateRanking(id: ID!, input: CreateRankingInput): CandidateRanking
+  deleteRanking(id: ID!): Boolean
+
+  createFeedback(input: CreateFeedbackInput): CandidateFeedback
+  updateFeedback(id: ID!, input: CreateFeedbackInput): CandidateFeedback
+  deleteFeedback(id: ID!): Boolean
+}

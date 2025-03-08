@@ -1,10 +1,13 @@
-import { userController } from "../../controllers/userController"; // El controlador con las funciones CRUD
+import { userController } from "../controllers/userController"; // El controlador con las funciones CRUD
 
-const resolvers = {
+const resolversUser = {
   Query: {
     getAllUsers: async () => {
-      return await userController.getAllUsers();
+      const users = await userController.getAllUsers();
+      console.log("Usuarios obtenidos:", users);
+      return users;
     },
+    
     getUserById: async (_: any, { id }: { id: string }) => {
       return await userController.getUserById(id);
     },
@@ -25,4 +28,4 @@ const resolvers = {
   },
 };
 
-export default resolvers;
+export default resolversUser;

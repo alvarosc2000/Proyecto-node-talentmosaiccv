@@ -1,0 +1,28 @@
+ # Esquema de CandidateFeedback
+  type CandidateFeedback {
+    id: ID!
+    applicationId: ID!
+    feedback: String
+    rating: Int
+    createdAt: String
+  }
+
+  # Entrada para crear o actualizar un feedback de candidato
+  input CreateFeedbackInput {
+    applicationId: ID!
+    feedback: String!
+    rating: Int!
+  }
+
+  # Definición de Queries
+  type Query {
+    getAllFeedbacks: [CandidateFeedback]
+    getFeedbackById(id: ID!): CandidateFeedback
+  }
+
+  # Definición de Mutations
+  type Mutation {
+    createFeedback(input: CreateFeedbackInput): CandidateFeedback
+    updateFeedback(id: ID!, input: CreateFeedbackInput): CandidateFeedback
+    deleteFeedback(id: ID!): Boolean
+  }

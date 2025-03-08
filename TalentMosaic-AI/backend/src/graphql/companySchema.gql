@@ -1,0 +1,25 @@
+type Company{
+    id: ID
+    name: String
+    industry: String
+    size: Int
+    createdAt: String
+    updatedAt: String    
+}
+
+input CreateCompanyInput{
+    name: String
+    industry: String
+    size: Int
+}
+
+type Query{
+    getAllCompanies: [Company]
+    getCompany(id: ID!): Company
+}
+
+type Mutation{
+    createCompany(input: CreateCompanyInput): Company
+    updateCompany(id: ID!, input: CreateCompanyInput): Company
+    deleteCompany(id: ID!): Boolean
+}

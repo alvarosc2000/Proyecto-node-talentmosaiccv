@@ -1,0 +1,40 @@
+scalar JSON
+
+type Candidate {
+    id: ID!
+    companyId: ID!
+    source: String
+    linkedinProfile: String
+    resume: JSON
+    skills: String
+    experience: Int
+    education: String
+    location: String
+    createdAt: String
+    updatedAt: String
+  }
+
+  # Entrada para crear o actualizar un candidato
+  input CreateCandidateInput {
+    companyId: ID!
+    source: String!
+    linkedinProfile: String
+    resume: JSON
+    skills: String
+    experience: Int
+    education: String
+    location: String
+  }
+
+  # Definición de Queries
+  type Query {
+    getAllCandidates: [Candidate]
+    getCandidateById(id: ID!): Candidate
+  }
+
+  # Definición de Mutations
+  type Mutation {
+    createCandidate(input: CreateCandidateInput): Candidate
+    updateCandidate(id: ID!, input: CreateCandidateInput): Candidate
+    deleteCandidate(id: ID!): Boolean
+  }

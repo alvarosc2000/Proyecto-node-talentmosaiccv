@@ -1,0 +1,33 @@
+ # Esquema de Application
+  type Application {
+    id: ID!
+    candidateId: ID!
+    jobId: ID!
+    status: String
+    score: Int
+    compatibility: Float
+    createdAt: String
+    updatedAt: String
+  }
+
+  # Entrada para crear o actualizar una aplicación
+  input CreateApplicationInput {
+    candidateId: ID!
+    jobId: ID!
+    status: String
+    score: Int
+    compatibility: Float
+  }
+
+  # Definición de Queries
+  type Query {
+    getAllApplications: [Application]
+    getApplicationById(id: ID!): Application
+  }
+
+  # Definición de Mutations
+  type Mutation {
+    createApplication(input: CreateApplicationInput): Application
+    updateApplication(id: ID!, input: CreateApplicationInput): Application
+    deleteApplication(id: ID!): Boolean
+  }

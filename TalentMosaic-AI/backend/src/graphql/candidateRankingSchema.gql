@@ -1,0 +1,27 @@
+type CandidateRanking {
+    id: ID!
+    applicationId: ID!
+    score: Int
+    ranking: Int
+    createdAt: String
+  }
+
+  # Entrada para crear o actualizar un ranking de candidato
+  input CreateRankingInput {
+    applicationId: ID!
+    score: Int!
+    ranking: Int!
+  }
+
+  # Definición de Queries
+  type Query {
+    getAllRankings: [CandidateRanking]
+    getRankingById(id: ID!): CandidateRanking
+  }
+
+  # Definición de Mutations
+  type Mutation {
+    createRanking(input: CreateRankingInput): CandidateRanking
+    updateRanking(id: ID!, input: CreateRankingInput): CandidateRanking
+    deleteRanking(id: ID!): Boolean
+  }

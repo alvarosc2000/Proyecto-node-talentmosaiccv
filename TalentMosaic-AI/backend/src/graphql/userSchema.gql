@@ -12,6 +12,7 @@ type User {
 
 # Entrada para crear o actualizar un usuario
 input CreateUserInput {
+  id: ID!
   firstName: String
   lastName: String
   email: String
