@@ -63,7 +63,7 @@ export default function Home() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Regístrate o Inicia Sesión
+            Start now
           </motion.button>
         </Link>
       </section>
