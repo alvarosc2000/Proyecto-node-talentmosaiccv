@@ -26,43 +26,92 @@ export default function CandidateDetail() {
       transition={{ duration: 1 }}
     >
       <motion.div
-        className="container mx-auto max-w-4xl bg-gray-800 p-8 rounded-2xl shadow-2xl"
-        initial={{ y: -20, opacity: 0 }}
+        className="container mx-auto max-w-4xl bg-gray-800 p-8 rounded-2xl shadow-2xl transform transition-all duration-500"
+        initial={{ y: -30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 30, opacity: 0 }}
       >
         <h1 className="text-4xl font-bold text-indigo-400 text-center mb-6">
           Perfil de {candidate.firstName} {candidate.lastName} 📋
         </h1>
 
-        <div className="mb-6">
-          <p className="text-lg">
+        <div className="mb-6 space-y-4">
+          <motion.p
+            className="text-lg"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
             <strong>Email:</strong> {candidate.email}
-          </p>
-          <p className="text-lg">
+          </motion.p>
+          <motion.p
+            className="text-lg"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
             <strong>Experiencia:</strong> {candidate.experience}
-          </p>
-          <p className="text-lg">
+          </motion.p>
+          <motion.p
+            className="text-lg"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+          >
             <strong>Puntaje de compatibilidad:</strong> {candidate.score}/100
-          </p>
-          <p className="text-lg">
+          </motion.p>
+          <motion.p
+            className="text-lg"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
             <strong>Habilidades clave:</strong> {candidate.skills.join(", ")}
-          </p>
+          </motion.p>
         </div>
 
         <div className="mb-6">
-          <h2 className="text-2xl font-semibold text-indigo-400">📊 ¿Por qué fue clasificado así?</h2>
-          <p className="text-gray-300 mt-2">{candidate.rankingReason}</p>
+          <motion.h2
+            className="text-2xl font-semibold text-indigo-400"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+          >
+            📊 ¿Por qué fue clasificado así?
+          </motion.h2>
+          <motion.p
+            className="text-gray-300 mt-2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.7 }}
+          >
+            {candidate.rankingReason}
+          </motion.p>
         </div>
 
         <div>
-          <h2 className="text-2xl font-semibold text-indigo-400">🤖 Explicación de la IA</h2>
-          <p className="text-gray-300 mt-2">{candidate.explanation}</p>
+          <motion.h2
+            className="text-2xl font-semibold text-indigo-400"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+          >
+            🤖 Explicación de la IA
+          </motion.h2>
+          <motion.p
+            className="text-gray-300 mt-2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.9 }}
+          >
+            {candidate.explanation}
+          </motion.p>
         </div>
 
         <div className="mt-8 text-center">
           <motion.button
             onClick={() => router.back()}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg"
+            className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-200 ease-in-out transform hover:scale-105 active:scale-95"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >

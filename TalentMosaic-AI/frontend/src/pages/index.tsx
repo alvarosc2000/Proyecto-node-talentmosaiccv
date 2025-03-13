@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import CookieConsent from "../components/CookieConsent";
 
 export default function Home() {
   const titleVariants = {
@@ -153,8 +154,7 @@ export default function Home() {
               icon: "🔗", 
               desc: "Conecta tu plataforma de contratación favorita con facilidad.", 
               details: "Integra TalentMosaic AI con tus sistemas actuales y mejora la experiencia de reclutamiento sin cambiar tu flujo de trabajo." 
-            }]
-              .map((feature, idx) => (
+            }].map((feature, idx) => (
                 <div key={idx} className="bg-gray-100 p-6 rounded-xl shadow hover:shadow-lg transition-all">
                   <div className="text-5xl">{feature.icon}</div>
                   <h3 className="text-xl font-semibold mt-4">{feature.title}</h3>
@@ -183,9 +183,23 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Footer */}
       <footer className="text-center text-sm text-gray-300 py-6">
         © 2025 TalentMosaic AI. Todos los derechos reservados.
       </footer>
+
+      {/* Política de Privacidad y Cookies */}
+      <div className="text-center text-sm text-gray-300 py-6">
+        <Link href="/privacy-policy">
+          <span className="hover:text-indigo-400">Política de Privacidad</span>
+        </Link>{" "}
+        |{" "}
+        <Link href="/cookies-policy">
+          <span className="hover:text-indigo-400">Política de Cookies</span>
+        </Link>
+      </div>
+      {/* Aquí añades el componente CookieConsent al final de la página */}
+      <CookieConsent />
     </motion.div>
   );
 }
