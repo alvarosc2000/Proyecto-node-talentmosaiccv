@@ -7,7 +7,10 @@ globalThis.__BUILD_MANIFEST = {
   ],
   "ampDevFiles": [],
   "lowPriorityFiles": [],
-  "rootMainFiles": [],
+  "rootMainFiles": [
+    "static/chunks/webpack.js",
+    "static/chunks/main-app.js"
+  ],
   "rootMainFilesTree": {},
   "pages": {
     "/": [
@@ -25,10 +28,30 @@ globalThis.__BUILD_MANIFEST = {
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/testIndex": [
+    "/candidateIndividual": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/testIndex.js"
+      "static/chunks/pages/candidateIndividual.js"
+    ],
+    "/candidates": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/candidates.js"
+    ],
+    "/cookies-policy": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/cookies-policy.js"
+    ],
+    "/paymentPage": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/paymentPage.js"
+    ],
+    "/privacy-policy": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/privacy-policy.js"
     ]
   },
   "ampFirstPages": []

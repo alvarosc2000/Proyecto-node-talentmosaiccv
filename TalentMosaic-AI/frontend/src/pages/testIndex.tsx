@@ -71,15 +71,15 @@ export default function Home() {
 
         {/* Botón de "Probar Ahora" colocado en la parte superior */}
         <Link href="/login">
-          <button className="mt-8 px-8 py-4 bg-indigo-500 rounded-full text-lg font-semibold hover:bg-indigo-600 transition">
+          <button className="mt-8 px-8 py-4 bg-blue-800 rounded-full text-lg font-semibold hover:bg-blue-900 transition">
             Probar Ahora
           </button>
         </Link>
       </section>
 
       {/* 🔹 Sección: ¿Qué hace TalentMosaic AI? */}
-      <section className="py-20 px-6 bg-gradient-to-b from-indigo-900 to-gray-900">
-        <h2 className="text-4xl font-bold text-center mb-12">🚀 ¿Qué hace TalentMosaic AI?</h2>
+      <section className="py-20 px-6 bg-gradient-to-b from-blue-900 to-gray-800">
+        <h2 className="text-4xl font-bold text-center mb-12 text-white">🚀 ¿Qué hace TalentMosaic AI?</h2>
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {[{
             title: "🔍 Análisis Inteligente",
@@ -115,11 +115,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 🔹 Sección: Planes de Suscripción */}
-      <section className="py-20 px-6 bg-gray-800">
-        <h2 className="text-4xl font-bold text-center mb-12">💰 Planes de Suscripción</h2>
+      {/* 🔹 Sección: Beneficios de usar TalentMosaic AI */}
+      <section className="py-20 px-6 bg-gradient-to-r from-blue-900 to-gray-800">
+        <h2 className="text-4xl font-bold text-center mb-12 text-white">📊 Beneficios de usar TalentMosaic AI</h2>
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {plans.map((plan, idx) => (
+          {[{
+            title: "⏳ Ahorro de Tiempo",
+            desc: "Reduce un 70% el tiempo de revisión de CVs gracias a nuestra IA.",
+          }, {
+            title: "🎯 Mejor Precisión",
+            desc: "Incrementa en un 85% la precisión al encontrar candidatos ideales.",
+          }, {
+            title: "💰 Menos Costos",
+            desc: "Disminuye los costos de contratación en un 50% gracias a la automatización.",
+          }].map((benefit, idx) => (
             <motion.div
               key={idx}
               initial={{ opacity: 0, y: 30 }}
@@ -128,18 +137,44 @@ export default function Home() {
               viewport={{ once: true }}
               className="bg-gray-900 p-8 rounded-xl shadow-lg text-center"
             >
+              <h3 className="text-2xl font-bold text-white">{benefit.title}</h3>
+              <p className="text-gray-300 mt-2">{benefit.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* 🔹 Sección: Planes de Suscripción */}
+      <section className="py-20 px-6 bg-gradient-to-t from-blue-900 to-gray-800">
+        <h2 className="text-4xl font-bold text-center mb-12 text-white">💰 Planes de Suscripción</h2>
+        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
+          {plans.map((plan, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: idx * 0.3 }}
+              viewport={{ once: true }}
+              className={`bg-gray-900 p-8 rounded-xl shadow-lg text-center ${plan.name === "Pro ⭐" ? "border-4 border-blue-700" : ""}`}
+            >
               <p className="text-6xl">{plan.emoji}</p>
-              <h3 className="text-2xl font-bold mt-4">{plan.name}</h3>
-              <p className="text-3xl font-semibold text-indigo-400 mt-2">{plan.monthlyPrice}</p>
+              <h3 className="text-3xl font-bold mt-4 text-white">{plan.name}</h3>
+              <p className="text-2xl font-semibold text-blue-400 mt-2">{plan.monthlyPrice}</p>
               <p className="text-gray-400 mt-2">{plan.features}</p>
+              <p className="text-gray-300 mt-4">{plan.description}</p>
+              {plan.name === "Pro ⭐" && (
+                <div className="mt-4 text-xl text-blue-400 font-semibold">
+                  <span>¡Más Popular!</span>
+                </div>
+              )}
             </motion.div>
           ))}
         </div>
       </section>
 
       {/* 🔹 Sección: Testimonios */}
-      <section className="py-20 px-6 bg-gradient-to-b from-gray-900 to-black">
-        <h2 className="text-4xl font-bold text-center mb-12">🌟 Lo que dicen nuestros usuarios</h2>
+      <section className="py-20 px-6 bg-gradient-to-t from-gray-900 to-black">
+        <h2 className="text-4xl font-bold text-center mb-12 text-white">🌟 Lo que dicen nuestros usuarios</h2>
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
           {[{
             name: "Juan Pérez",
@@ -165,7 +200,7 @@ export default function Home() {
               className="bg-gray-800 p-8 rounded-xl shadow-lg text-center"
             >
               <p className="text-lg text-gray-300">"{testimonial.testimonial}"</p>
-              <p className="font-bold text-xl text-indigo-400 mt-4">{testimonial.name}</p>
+              <p className="font-bold text-xl text-blue-400 mt-4">{testimonial.name}</p>
               <p className="text-gray-400">{testimonial.role} - {testimonial.company}</p>
             </motion.div>
           ))}
@@ -174,11 +209,11 @@ export default function Home() {
 
       {/* 🔹 Sección: Características Técnicas */}
       <section className="py-20 px-6 bg-gray-800">
-        <h2 className="text-4xl font-bold text-center mb-12">🔧 Características Técnicas</h2>
+        <h2 className="text-4xl font-bold text-center mb-12 text-white">🔧 Características Técnicas</h2>
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {[{
             title: "Seguridad de Datos",
-            desc: "Toda la información está encriptada y cumplimos con regulaciones como el GDPR.",
+            desc: "Toda la información está encriptada y cumplimos con regulaciones como GDPR.",
           }, {
             title: "Machine Learning Avanzado",
             desc: "Nuestro algoritmo de IA aprende y mejora constantemente.",
@@ -201,20 +236,39 @@ export default function Home() {
         </div>
       </section>
 
-
-
-      {/* 🔹 Sección: Llamado a la Acción */}
-      <section className="py-20 px-6 text-center bg-gradient-to-t from-indigo-900 to-gray-900">
-        <h2 className="text-4xl font-bold mb-6">📈 Potencia tu selección de candidatos</h2>
-        <p className="text-lg max-w-xl mx-auto text-gray-300">
-          Descubre cómo nuestra IA puede ayudarte a encontrar los mejores talentos sin esfuerzo.
-        </p>
+      {/* 🔹 Sección: Preguntas Frecuentes */}
+      <section className="py-20 px-6 bg-gray-900">
+        <h2 className="text-4xl font-bold text-center mb-12 text-white">❓ Preguntas Frecuentes</h2>
+        <div className="max-w-4xl mx-auto space-y-6">
+          {[{
+            question: "¿TalentMosaic AI es seguro?",
+            answer: "Sí, usamos cifrado de datos y cumplimos con regulaciones como GDPR para proteger la información.",
+          }, {
+            question: "¿Cómo funciona el ranking de candidatos?",
+            answer: "Nuestra IA analiza la experiencia y habilidades de cada candidato para sugerir los mejores perfiles.",
+          }, {
+            question: "¿Puedo cancelar mi suscripción en cualquier momento?",
+            answer: "Sí, puedes cancelar tu plan en cualquier momento sin penalización.",
+          }, {
+            question: "¿TalentMosaic AI se integra con otras plataformas?",
+            answer: "Sí, TalentMosaic AI es compatible con plataformas globales y puede integrarse fácilmente con tu sistema de contratación.",
+          }].map((item, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: idx * 0.3 }}
+              viewport={{ once: true }}
+              className="bg-gray-800 p-6 rounded-xl shadow-lg"
+            >
+              <h3 className="text-2xl font-semibold text-blue-400">{item.question}</h3>
+              <p className="text-gray-300 mt-2">{item.answer}</p>
+            </motion.div>
+          ))}
+        </div>
       </section>
 
-      {/* 🔹 Footer + Cookies */}
-      <footer className="text-center text-sm text-gray-300 py-6 bg-gray-900">
-        © {new Date().getFullYear()} TalentMosaic AI. Todos los derechos reservados.
-      </footer>
+      {/* 🔹 Consentimiento de Cookies */}
       <CookieConsent />
     </div>
   );
