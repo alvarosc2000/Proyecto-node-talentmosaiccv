@@ -1,7 +1,12 @@
-import  db  from "../config/db";
-import { User } from "../models/schema";
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import db from "../config/db";  // Asegúrate de que db esté correctamente configurado
+import { User } from "../models/schema"; // Asegúrate de que esta ruta sea correcta
+import dotenv from 'dotenv';
+import { SignOptions } from 'jsonwebtoken';
 
-// Clase para manejar operaciones de usuarios
+dotenv.config();
+
 class UserController {
   // 🔹 Serialización: Convierte un objeto de la aplicación a formato SQL
   private serialize(user: any) {
@@ -22,7 +27,7 @@ class UserController {
   // 🔹 Deserialización: Convierte una fila de la DB a objeto de la aplicación
   private deserialize(row: any) {
     return {
-      id: row.id,  // Asegúrate de acceder directamente al valor de la columna
+      id: row.id,
       companyId: row.company_id,
       firstName: row.first_name,
       lastName: row.last_name,
@@ -46,6 +51,13 @@ class UserController {
   async getUserById(id: string) {
     const query = "SELECT * FROM users WHERE id = $1";
     const { rows } = await db.query(query, [id]);
+    return rows.length > 0 ? this.deserialize(rows[0]) : null;
+  }
+
+  // 🔹 Obtener un usuario por correo electrónico
+  async getUserByEmail(email: string) {
+    const query = "SELECT * FROM users WHERE email = $1";
+    const { rows } = await db.query(query, [email]);
     return rows.length > 0 ? this.deserialize(rows[0]) : null;
   }
 
@@ -97,6 +109,65 @@ class UserController {
   async deleteUser(id: string): Promise<void> {
     const query = "DELETE FROM users WHERE id = $1";
     await db.query(query, [id]);
+  }
+
+  // 🔹 Registrar un nuevo usuario
+  async register(user: any) {
+    // Verificar si el usuario ya existe por correo
+    const existingUser = await this.getUserByEmail(user.email);
+    if (existingUser) {
+      throw new Error('El correo electrónico ya está registrado');
+    }
+
+    // Cifrar la contraseña antes de guardarla
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+
+    // Crear el nuevo usuario
+    const newUser = {
+      ...user,
+      password: hashedPassword,
+    };
+
+    return await this.createUser(newUser);
+  }
+
+  // 🔹 Iniciar sesión de un usuario
+  async login(email: string, password: string) {
+    // Verificar si el usuario existe
+    const user = await this.getUserByEmail(email);
+    if (!user) {
+      throw new Error('Usuario no encontrado');
+    }
+
+    // Verificar la contraseña
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      throw new Error('Contraseña incorrecta');
+    }
+
+    // Crear un JWT para el usuario
+    const token = this.generateAuthToken(user);
+
+    return { user, token };
+  }
+
+  // 🔹 Generar un token de autenticación (JWT)
+  private generateAuthToken(user: any) {
+    const payload = {
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    };
+  
+    const secretKey: string = process.env.SECRET_KEY || 'default-secret-key'; // Si no se encuentra, usar un valor por defecto
+  
+    // Definir explícitamente las opciones con el tipo `SignOptions`
+    const options: SignOptions = {
+      expiresIn: '1h', // Esto debería ser reconocido correctamente
+    };
+  
+    // La firma del JWT
+    return jwt.sign(payload, secretKey, options);
   }
 }
 

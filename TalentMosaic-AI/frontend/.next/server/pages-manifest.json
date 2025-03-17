@@ -2,10 +2,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/cookies-policy": "pages/cookies-policy.js",
-  "/paymentPage": "pages/paymentPage.js",
-  "/privacy-policy": "pages/privacy-policy.js",
-  "/": "pages/index.js",
   "/candidates": "pages/candidates.js",
-  "/candidateIndividual": "pages/candidateIndividual.js"
+  "/candidateIndividual": "pages/candidateIndividual.js",
+  "/paymentPage": "pages/paymentPage.js"
 }

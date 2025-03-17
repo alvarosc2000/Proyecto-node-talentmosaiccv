@@ -23,7 +23,7 @@ export default function Home() {
       description: "Plan ideal para quienes necesitan un servicio básico y limitados CVs mensuales.",
     },
     {
-      name: "Pro ⭐",
+      name: "Pro",
       limit: "500 CVs/mes",
       features: "IA + Ajustes",
       monthlyPrice: "$99/mes",
@@ -43,25 +43,43 @@ export default function Home() {
   ];
 
   return (
-    <div className="bg-gray-900 text-white min-h-screen">
-      {/* 🔹 Pantalla de Inicio Ampliada */}
-      <section className="h-screen flex flex-col items-center justify-center text-center px-6">
+    <div className="bg-gray-900 text-white min-h-screen relative">
+      <section className="h-screen flex flex-col items-center justify-center text-center px-6 relative">
+        
+        {/* Video de fondo */}
+        <video
+          className="absolute top-0 left-0 w-full h-full object-cover opacity-30"
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source src="/video5.mp4" type="video/mp4" />
+          Tu navegador no soporta el video.
+        </video>
+
+        {/* Capa semitransparente */}
+        <div className="absolute top-0 left-0 w-full h-full bg-black opacity-20"></div>
+
+        {/* Contenido */}
         <motion.h1
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2 }}
-          className="text-8xl font-extrabold tracking-wide"
+          className="text-8xl font-extrabold tracking-wide drop-shadow-xl relative text-white"
         >
           TalentMosaic AI
         </motion.h1>
+
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="text-xl mt-6 max-w-xl text-gray-300"
+          className="text-xl mt-6 max-w-xl text-gray-300 drop-shadow-md relative"
         >
           Encuentra al candidato ideal con inteligencia artificial. Sin sesgos. Sin complicaciones.
         </motion.p>
+
         <motion.div
           className="absolute bottom-12 text-gray-400 animate-bounce"
           animate={{ opacity: scrollY < 50 ? 1 : 0 }}
@@ -69,12 +87,13 @@ export default function Home() {
           Desliza para descubrir más ↓
         </motion.div>
 
-        {/* Botón de "Probar Ahora" colocado en la parte superior */}
+        {/* Botón de acción */}
         <Link href="/login">
-          <button className="mt-8 px-8 py-4 bg-blue-800 rounded-full text-lg font-semibold hover:bg-blue-900 transition">
+          <button className="mt-8 px-8 py-4 bg-blue-800 rounded-full text-lg font-semibold hover:bg-blue-900 transition relative">
             Probar Ahora
           </button>
         </Link>
+
       </section>
 
       {/* 🔹 Sección: ¿Qué hace TalentMosaic AI? */}
@@ -106,7 +125,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: idx * 0.3 }}
               viewport={{ once: true }}
-              className="bg-gray-800 p-6 rounded-xl shadow-lg text-center"
+              className="bg-gray-800 p-6 rounded-xl shadow-xl text-center"
             >
               <h3 className="text-2xl font-bold">{feature.title}</h3>
               <p className="text-gray-300 mt-2">{feature.desc}</p>
@@ -135,7 +154,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: idx * 0.3 }}
               viewport={{ once: true }}
-              className="bg-gray-900 p-8 rounded-xl shadow-lg text-center"
+              className="bg-gray-900 p-8 rounded-xl shadow-xl text-center"
             >
               <h3 className="text-2xl font-bold text-white">{benefit.title}</h3>
               <p className="text-gray-300 mt-2">{benefit.desc}</p>
@@ -155,16 +174,23 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: idx * 0.3 }}
               viewport={{ once: true }}
-              className={`bg-gray-900 p-8 rounded-xl shadow-lg text-center ${plan.name === "Pro ⭐" ? "border-4 border-blue-700" : ""}`}
+              className={`bg-gray-900 p-8 rounded-xl shadow-xl text-center ${plan.name === "Pro" ? "border-4 border-blue-700" : ""}`}
             >
               <p className="text-6xl">{plan.emoji}</p>
               <h3 className="text-3xl font-bold mt-4 text-white">{plan.name}</h3>
               <p className="text-2xl font-semibold text-blue-400 mt-2">{plan.monthlyPrice}</p>
               <p className="text-gray-400 mt-2">{plan.features}</p>
               <p className="text-gray-300 mt-4">{plan.description}</p>
-              {plan.name === "Pro ⭐" && (
+              
+              <div className="text-center mb-4">
+                  <p className="text-4xl font-bold text-indigo-500">{plan.monthlyPrice}</p>
+                  <p className="text-sm text-gray-400 line-through">{plan.annualPrice}</p>
+                  <p className="text-sm text-green-400">Ahorras un {Math.round(((parseFloat(plan.monthlyPrice.slice(1)) * 12 - parseFloat(plan.annualPrice.slice(1))) / (parseFloat(plan.monthlyPrice.slice(1)) * 12)) * 100)}% con el pago anual</p>
+                </div>
+                
+              {plan.name === "Pro" && (
                 <div className="mt-4 text-xl text-blue-400 font-semibold">
-                  <span>¡Más Popular!</span>
+                  <span>¡Más Popular⭐ !</span>
                 </div>
               )}
             </motion.div>
@@ -197,7 +223,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: idx * 0.3 }}
-              className="bg-gray-800 p-8 rounded-xl shadow-lg text-center"
+              className="bg-gray-800 p-8 rounded-xl shadow-xl text-center"
             >
               <p className="text-lg text-gray-300">"{testimonial.testimonial}"</p>
               <p className="font-bold text-xl text-blue-400 mt-4">{testimonial.name}</p>
@@ -227,7 +253,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: idx * 0.3 }}
               viewport={{ once: true }}
-              className="bg-gray-900 p-8 rounded-xl shadow-lg text-center"
+              className="bg-gray-900 p-8 rounded-xl shadow-xl text-center"
             >
               <h3 className="text-2xl font-bold">{feature.title}</h3>
               <p className="text-gray-300 mt-2">{feature.desc}</p>
@@ -259,7 +285,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: idx * 0.3 }}
               viewport={{ once: true }}
-              className="bg-gray-800 p-6 rounded-xl shadow-lg"
+              className="bg-gray-800 p-6 rounded-xl shadow-xl"
             >
               <h3 className="text-2xl font-semibold text-blue-400">{item.question}</h3>
               <p className="text-gray-300 mt-2">{item.answer}</p>

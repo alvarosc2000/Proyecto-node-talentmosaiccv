@@ -20,6 +20,7 @@
     "@apollo/server": "^4.11.3",
     "@types/graphql": "^14.5.0",
     "axios": "^1.7.9",
+    "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "drizzle-kit": "^0.30.5",
@@ -29,6 +30,7 @@
     "fs": "^0.0.1-security",
     "graphql": "^16.10.0",
     "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
     "path": "^0.12.7",
     "pg": "^8.13.3"
   },

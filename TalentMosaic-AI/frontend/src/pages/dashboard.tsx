@@ -35,7 +35,7 @@ export default function Dashboard() {
       <div className="container mx-auto max-w-6xl">
         <h1 className="text-5xl font-extrabold text-center mb-12">📊 Dashboard</h1>
 
-        {/* Formulario para Añadir Vacantes */}
+        {/* 🔹 Formulario para Añadir Vacantes */}
         <div className="bg-gray-800 p-6 rounded-2xl shadow-lg w-full mb-10">
           <h2 className="text-2xl font-bold text-center mb-4">➕ Añadir Nueva Vacante</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -75,21 +75,27 @@ export default function Dashboard() {
           </button>
         </div>
 
-        {/* Lista de Vacantes Abiertas */}
+        {/* 🔹 Lista de Vacantes Abiertas */}
         <div className="mb-12">
           <h2 className="text-3xl font-semibold text-center mb-6">📝 Vacantes Disponibles</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {jobs.filter(job => job.status === 'open').map((job) => (
-              <div key={job.id} className="bg-gray-800 p-6 rounded-lg shadow-lg">
+              <div 
+                key={job.id} 
+                className="bg-gray-800 p-6 rounded-lg shadow-lg hover:scale-105 transition transform duration-300 cursor-pointer"
+                onClick={() => router.push(`/candidates?jobId=${job.id}`)}
+              >
                 <JobCard
                   title={job.title}
                   company={job.company}
                   location={job.location}
-                  onClick={() => router.push(`/candidates?jobId=${job.id}`)}
                 />
                 <p className="text-sm text-gray-400 mt-2">{job.description}</p>
                 <button 
-                  onClick={() => handleCloseJob(job.id)} 
+                  onClick={(e) => {
+                    e.stopPropagation(); // Evita que haga click en toda la tarjeta
+                    handleCloseJob(job.id);
+                  }} 
                   className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4 w-full"
                 >
                   Cerrar Vacante
@@ -99,7 +105,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Lista de Vacantes Cubiertas */}
+        {/* 🔹 Lista de Vacantes Cubiertas */}
         <div className="mb-12">
           <h2 className="text-3xl font-semibold text-center mb-6">✅ Vacantes Cubiertas</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -113,22 +119,27 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Ranking de Candidatos */}
+        {/* 🔹 Ranking de Candidatos */}
         <div>
-          <h2 className="text-3xl font-semibold text-center mb-6">🏆 Ultimos candidatos analizados</h2>
+          <h2 className="text-3xl font-semibold text-center mb-6">🏆 Últimos candidatos analizados</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {candidates
               .sort((a, b) => b.score - a.score)
               .map((candidate, index) => (
-                <CandidateCard
-                  key={candidate.id}
-                  firstName={candidate.firstName}
-                  lastName={candidate.lastName}
-                  email={candidate.email}
-                  experience={candidate.experience}
-                  score={candidate.score}
-                  rank={index + 1}
-                />
+                <div 
+                  key={candidate.id} 
+                  className="bg-gray-800 p-6 rounded-lg shadow-lg hover:scale-105 transition transform duration-300 cursor-pointer"
+                  onClick={() => router.push(`/candidateIndividual?id=${candidate.id}`)}
+                >
+                  <CandidateCard
+                    firstName={candidate.firstName}
+                    lastName={candidate.lastName}
+                    email={candidate.email}
+                    experience={candidate.experience}
+                    score={candidate.score}
+                    rank={index + 1}
+                  />
+                </div>
               ))}
           </div>
         </div>

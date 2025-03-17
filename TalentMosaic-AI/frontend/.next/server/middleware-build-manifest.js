@@ -13,11 +13,6 @@ globalThis.__BUILD_MANIFEST = {
   ],
   "rootMainFilesTree": {},
   "pages": {
-    "/": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/index.js"
-    ],
     "/_app": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
@@ -38,20 +33,10 @@ globalThis.__BUILD_MANIFEST = {
       "static/chunks/main.js",
       "static/chunks/pages/candidates.js"
     ],
-    "/cookies-policy": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/cookies-policy.js"
-    ],
     "/paymentPage": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/paymentPage.js"
-    ],
-    "/privacy-policy": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/privacy-policy.js"
     ]
   },
   "ampFirstPages": []
