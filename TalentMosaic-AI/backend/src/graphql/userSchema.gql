@@ -10,14 +10,19 @@ type User {
   updatedAt: String
 }
 
-# Entrada para crear o actualizar un usuario
+# Entrada para crear un usuario
 input CreateUserInput {
-  id: ID!
-  firstName: String
-  lastName: String
-  email: String
-  password: String
-  role: String
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  role: String!
+}
+
+# Entrada para login
+input LoginInput {
+  email: String!
+  password: String!
 }
 
 # Definición de Queries
@@ -28,7 +33,15 @@ type Query {
 
 # Definición de Mutations
 type Mutation {
-  createUser(input: CreateUserInput): User
-  updateUser(id: ID!, input: CreateUserInput): User
+  createUser(input: CreateUserInput!): User
+  updateUser(id: ID!, input: CreateUserInput!): User
   deleteUser(id: ID!): Boolean
+  register(input: CreateUserInput!): User
+  login(input: LoginInput!): AuthPayload
+}
+
+# Tipo de retorno para login
+type AuthPayload {
+  token: String!
+  user: User!
 }

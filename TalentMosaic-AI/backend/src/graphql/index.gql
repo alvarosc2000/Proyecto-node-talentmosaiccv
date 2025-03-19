@@ -12,7 +12,6 @@ type User {
 
 # Entrada para crear o actualizar un usuario
 input CreateUserInput {
-  id: ID!
   firstName: String
   lastName: String
   email: String
@@ -141,6 +140,19 @@ type Job {
     compatibility: Float
   }
 
+  # Tipo de retorno para login
+  type AuthPayload {
+    token: String!
+    user: User!
+  }
+
+
+  # Entrada para login
+  input LoginInput {
+    email: String!
+    password: String!
+  }
+
 
 type Query {
   getAllUsers: [User]
@@ -169,6 +181,8 @@ type Mutation {
   createUser(input: CreateUserInput): User
   updateUser(id: ID!, input: CreateUserInput): User
   deleteUser(id: ID!): Boolean
+  register(input: CreateUserInput!): User
+  login(input: LoginInput!): AuthPayload
 
   createJob(input: CreateJobInput): Job
   updateJob(id: ID!, input: CreateJobInput): Job

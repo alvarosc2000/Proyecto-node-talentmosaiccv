@@ -4,6 +4,8 @@ import db from "../config/db";  // Asegúrate de que db esté correctamente conf
 import { User } from "../models/schema"; // Asegúrate de que esta ruta sea correcta
 import dotenv from 'dotenv';
 import { SignOptions } from 'jsonwebtoken';
+import { v4 as uuidv4 } from 'uuid';
+
 
 dotenv.config();
 
@@ -63,20 +65,34 @@ class UserController {
 
   // 🔹 Crear un nuevo usuario
   async createUser(user: any) {
-    const serializedUser = this.serialize(user);
-    const query = `INSERT INTO users (id, company_id, first_name, last_name, email, password, role, linkedin_token, created_at) 
-                   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW())`;
-    const result = await db.query(query, [
-      serializedUser.id,
-      serializedUser.companyId,
-      serializedUser.firstName,
-      serializedUser.lastName,
-      serializedUser.email,
-      serializedUser.password,
-      serializedUser.role,
-      serializedUser.linkedInToken,
-    ]);
-    return result.rows[0];  // Devuelve el usuario recién creado
+      try {
+          console.log("📌 Insertando usuario en la base de datos:", user);
+          
+          const query = `INSERT INTO users (id, first_name, last_name, email, password, role, created_at) 
+                        VALUES ($1, $2, $3, $4, $5, $6, NOW()) RETURNING *`;
+
+          const { rows } = await db.query(query, [
+              user.id,
+              user.firstName,
+              user.lastName,
+              user.email,
+              user.password,
+              user.role,
+          ]);
+
+          // Asegúrate de que se retorne correctamente el usuario
+          if (rows.length === 0) {
+              throw new Error("No se pudo crear el usuario en la base de datos.");
+          }
+
+          const createdUser = rows[0];  // Esto debería dar el primer (y único) resultado de la inserción
+          console.log("✅ Usuario insertado en la base de datos:", createdUser);
+
+          return createdUser;
+      } catch (error) {
+          console.error("❌ Error en createUser():", error);
+          throw error;
+      }
   }
 
   // 🔹 Actualizar un usuario
@@ -113,43 +129,68 @@ class UserController {
 
   // 🔹 Registrar un nuevo usuario
   async register(user: any) {
-    // Verificar si el usuario ya existe por correo
-    const existingUser = await this.getUserByEmail(user.email);
-    if (existingUser) {
-      throw new Error('El correo electrónico ya está registrado');
+    try {
+        console.log("📌 Intentando registrar usuario:", user);
+
+        const existingUser = await this.getUserByEmail(user.email);
+        if (existingUser) {
+            throw new Error('❌ El correo electrónico ya está registrado');
+        }
+
+        const hashedPassword = await bcrypt.hash(user.password, 10);
+        console.log("🔑 Contraseña cifrada:", hashedPassword);
+
+        const newUser = {
+            id: uuidv4(),
+            ...user,
+            password: hashedPassword,
+        };
+
+        console.log("📌 Creando usuario en la base de datos:", newUser);
+
+        const createdUser = await this.createUser(newUser);
+        console.log("✅ Usuario creado con éxito:", createdUser);
+
+        return createdUser;
+    } catch (error) {
+        console.error("❌ Error en register():", error);
+        throw error;
     }
+}
 
-    // Cifrar la contraseña antes de guardarla
-    const hashedPassword = await bcrypt.hash(user.password, 10);
 
-    // Crear el nuevo usuario
-    const newUser = {
-      ...user,
-      password: hashedPassword,
-    };
-
-    return await this.createUser(newUser);
-  }
 
   // 🔹 Iniciar sesión de un usuario
-  async login(email: string, password: string) {
-    // Verificar si el usuario existe
-    const user = await this.getUserByEmail(email);
-    if (!user) {
-      throw new Error('Usuario no encontrado');
-    }
+    async login(email: string, password: string) {
+      console.log("Intentando iniciar sesión con email:", email);
 
-    // Verificar la contraseña
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      throw new Error('Contraseña incorrecta');
-    }
+      // Verificar si el usuario existe
+      const user = await this.getUserByEmail(email);
+      if (!user) {
+          console.error("❌ Usuario no encontrado en la base de datos");
+          throw new Error('Usuario no encontrado');
+      }
 
-    // Crear un JWT para el usuario
-    const token = this.generateAuthToken(user);
+      console.log("✅ Usuario encontrado:", user);
 
-    return { user, token };
+      // Verificar la contraseña
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      console.log("Resultado de la comparación de contraseña:", isPasswordValid);
+
+      if (!isPasswordValid) {
+          console.error("❌ Contraseña incorrecta");
+          throw new Error('Contraseña incorrecta');
+      }
+
+      console.log("✅ Contraseña correcta, generando token...");
+
+      // Crear un JWT para el usuario
+      const token = this.generateAuthToken(user);
+      console.log("✅ Token generado:", token);
+
+      return { user, token };
   }
+
 
   // 🔹 Generar un token de autenticación (JWT)
   private generateAuthToken(user: any) {
