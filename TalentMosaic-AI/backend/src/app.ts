@@ -8,6 +8,7 @@ import { readFileSync } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { mergedResolvers } from "./resolvers/resolver"; // Importar resolvers combinados
+import router from "./routes/cv";
 
 dotenv.config(); // Cargar variables de entorno al inicio
 
@@ -37,7 +38,7 @@ async function startServer() {
 
   // Usar el middleware de Apollo Server con Express
   app.use("/graphql", expressMiddleware(server));
-
+  app.use(router)
   // Ruta principal para comprobar que el servidor está en funcionamiento
   app.get("/", (req, res) => {
     res.send("TalentMosaicCV AI Backend Running...");
