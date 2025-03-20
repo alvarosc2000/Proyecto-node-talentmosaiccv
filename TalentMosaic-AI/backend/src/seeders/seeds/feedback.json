@@ -1,0 +1,24 @@
+[
+    {
+      "id": "cf035362-25a2-4a12-9b60-f163b5205434",
+      "candidateId": "6a3d05fb-62b8-4331-a510-a40d8cb6c587",
+      "userId": "a791db68-7f66-4895-b58e-d02454430d20",
+      "features": {
+        "feedback": "Candidate needs more experience in leadership roles",
+        "adjustment": "Increase weight on leadership experience"
+      },
+      "scoreChange": -5.0
+    },
+
+    {
+      "id": "672efac3-7228-4536-ab62-805a9a3cc6cf",
+      "candidateId": "d7ce3f5b-b1ae-4922-a1ab-03c01a0a910d",
+      "userId": "2cf20736-ff1e-4a9d-9a9e-bc2d799b3c5a",
+      "features": {
+        "feedback": "Strong analytical skills but lacks hands-on experience",
+        "adjustment": "Increase importance of practical experience"
+      },
+      "scoreChange": -3.5
+    }
+  ]
+  

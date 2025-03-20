@@ -5,6 +5,7 @@ import resolversJob from "./resolverJob";
 import resolversApplication from "./resolversApplication";
 import resolversCandidateFeedback from "./resolversCandidateFeedback";
 import resolversCandidateRanking from "./resolversCandidateRanking";
+import { resolvers } from "./resolverAiTraining";
 
 // Unificar todos los resolvers en un solo objeto
 export const mergedResolvers = {
@@ -16,6 +17,7 @@ export const mergedResolvers = {
     ...resolversApplication.Query,
     ...resolversCandidateFeedback.Query,
     ...resolversCandidateRanking.Query,
+    ...resolvers.Query,
   },
   Mutation: {
     ...resolversUser.Mutation,
@@ -25,5 +27,6 @@ export const mergedResolvers = {
     ...resolversApplication.Mutation,
     ...resolversCandidateFeedback.Mutation,
     ...resolversCandidateRanking.Mutation,
+    ...resolvers.Mutation,
   },
 };

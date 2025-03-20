@@ -5,6 +5,8 @@ import { Company } from "./tables/company";
 import { Job } from "./tables/jobs";
 import { User, rolesEnum } from "./tables/users";
 import { CandidateFeedback } from "./tables/candidate_feedback";
+import { FeedbackLog } from "./tables/feedback_log";
+import { AiTrainingData } from "./tables/ai_training_data";
 
 export{
     Application,
@@ -16,5 +18,7 @@ export{
     Job,
     User,
     rolesEnum,
-    CandidateFeedback
+    CandidateFeedback,
+    FeedbackLog,
+    AiTrainingData
 }

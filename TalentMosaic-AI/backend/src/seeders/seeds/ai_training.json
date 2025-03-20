@@ -1,0 +1,27 @@
+[
+    {
+      "id": "b66e8dff-17cb-4844-95b4-f1e570d94ecb",
+      "candidateId": "d7ce3f5b-b1ae-4922-a1ab-03c01a0a910d",
+      "jobId": "9e587363-6bab-4753-8674-546fae482321",
+      "features": {
+        "skills": ["JavaScript", "React", "Node.js"],
+        "experience": 5,
+        "education": "Computer Science",
+        "certifications": ["AWS Certified Developer"]
+      },
+      "score": 85
+    },
+    {
+      "id": "169d7610-19e1-4679-b8d6-39f4a8f6cc93",
+      "candidateId": "14c25d65-22de-400e-b5d7-e26338327299",
+      "jobId": "7f160a16-a9a4-4739-a746-f74ba562ecdf",
+      "features": {
+        "skills": ["Python", "Django", "Machine Learning"],
+        "experience": 3,
+        "education": "Software Engineering",
+        "certifications": ["Google TensorFlow Developer"]
+      },
+      "score": 78
+    }
+  ]
+  

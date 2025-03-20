@@ -2,7 +2,7 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url"; // Importar helper para obtener __dirname
-import { Company, User, Candidate, Job, Application, CandidateRanking, CandidateFeedback } from "../models/schema";
+import { Company, User, Candidate, Job, Application, CandidateRanking, CandidateFeedback, AiTrainingData, FeedbackLog } from "../models/schema";
 
 // 📍 Definir __dirname manualmente en ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -40,6 +40,8 @@ const seedDatabase = async () => {
     const applications = loadJson("./applications.json");
     const candidateRankings = loadJson("./candidate_rankings.json");
     const candidateFeedbacks = loadJson("./candidate_feedback.json");
+    const feedBack = loadJson("./feedback.json");
+    const aiTraining = loadJson ("./ai_training.json");
 
     console.log("🚀 Insertando datos...");
     await db.insert(Company).values(companies);
@@ -49,6 +51,8 @@ const seedDatabase = async () => {
     await db.insert(Application).values(applications);
     await db.insert(CandidateRanking).values(candidateRankings);
     await db.insert(CandidateFeedback).values(candidateFeedbacks);
+    await db.insert(FeedbackLog).values(feedBack);
+    await db.insert(AiTrainingData).values(aiTraining);
 
     console.log("✅ Seeding completado.");
   } catch (error) {

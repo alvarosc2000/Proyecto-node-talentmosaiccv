@@ -154,6 +154,25 @@ type Job {
   }
 
 
+  type FeedbackLog {
+    id: ID!
+    candidate_id: ID!
+    user_id: ID!
+    score_change: Float!
+    created_at: String!
+  }
+
+  type AiTrainingData {
+    id: ID!
+    candidate_id: ID!
+    job_id: ID!
+    features: JSON!
+    score: Float!
+    created_at: String!
+  }
+
+
+
 type Query {
   getAllUsers: [User]
   getUserById(id: ID!): User
@@ -175,6 +194,9 @@ type Query {
 
   getAllFeedbacks: [CandidateFeedback]
   getFeedbackById(id: ID!): CandidateFeedback
+
+  getFeedbackLogs: [FeedbackLog]
+  getTrainingData: [AiTrainingData]
 }
 
 type Mutation {
@@ -207,4 +229,7 @@ type Mutation {
   createFeedback(input: CreateFeedbackInput): CandidateFeedback
   updateFeedback(id: ID!, input: CreateFeedbackInput): CandidateFeedback
   deleteFeedback(id: ID!): Boolean
+
+  addFeedbackLog(candidate_id: ID!, user_id: ID!, score_change: Float!): FeedbackLog
+  addTrainingData(candidate_id: ID!, job_id: ID!, features: JSON!, score: Float!): AiTrainingData
 }

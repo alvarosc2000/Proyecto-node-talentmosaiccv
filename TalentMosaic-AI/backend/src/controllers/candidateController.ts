@@ -1,6 +1,8 @@
 import db from "../config/db";
+import { PDFParser } from "../services/pdfParser";
+
 class CandidateController {
-    serialize(candidate:any) {
+    serialize(candidate: any) {
         return {
             id: candidate.id,
             companyId: candidate.companyId,
@@ -15,7 +17,8 @@ class CandidateController {
             updatedAt: candidate.updatedAt ? candidate.updatedAt.toISOString() : null,
         };
     }
-    deserialize(row:any) {
+
+    deserialize(row: any) {
         return {
             id: row.id,
             companyId: row.company_id,
@@ -30,23 +33,26 @@ class CandidateController {
             updatedAt: row.updated_at ? new Date(row.updated_at) : null,
         };
     }
+
     async getAllCandidates() {
         const query = "SELECT * FROM candidates";
         const { rows } = await db.query(query);
         return rows.map(this.deserialize);
     }
-    async getCandidateById(id: any) {
+
+    async getCandidateById(id: string) {
         const query = "SELECT * FROM candidates WHERE id = $1";
         const { rows } = await db.query(query, [id]);
         return rows.length > 0 ? this.deserialize(rows[0]) : null;
     }
+
     async createCandidate(candidate: any) {
         const serializedCandidate = this.serialize(candidate);
         const query = `
-      INSERT INTO candidates (id, company_id, source, linkedin_profile, resume, skills, experience, education, location, created_at) 
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, NOW()) RETURNING *`;
-        const result = await db.query(query, [
-            serializedCandidate.id,
+            INSERT INTO candidates (company_id, source, linkedin_profile, resume, skills, experience, education, location, created_at) 
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW()) 
+            RETURNING *`;
+        const { rows } = await db.query(query, [
             serializedCandidate.companyId,
             serializedCandidate.source,
             serializedCandidate.linkedinProfile,
@@ -56,22 +62,24 @@ class CandidateController {
             serializedCandidate.education,
             serializedCandidate.location,
         ]);
-        return result.rows[0];
+        return rows[0];
     }
-    async updateCandidate(id: any, candidate: any) {
+
+    async updateCandidate(id: string, candidate: any) {
         const serializedCandidate = this.serialize(candidate);
         const query = `
-      UPDATE candidates SET 
-        company_id = COALESCE($1, company_id), 
-        source = COALESCE($2, source), 
-        linkedin_profile = COALESCE($3, linkedin_profile), 
-        resume = COALESCE($4, resume), 
-        skills = COALESCE($5, skills), 
-        experience = COALESCE($6, experience), 
-        education = COALESCE($7, education), 
-        location = COALESCE($8, location), 
-        updated_at = NOW()
-      WHERE id = $9 RETURNING *`;
+            UPDATE candidates SET 
+                company_id = COALESCE($1, company_id), 
+                source = COALESCE($2, source), 
+                linkedin_profile = COALESCE($3, linkedin_profile), 
+                resume = COALESCE($4, resume), 
+                skills = COALESCE($5, skills), 
+                experience = COALESCE($6, experience), 
+                education = COALESCE($7, education), 
+                location = COALESCE($8, location), 
+                updated_at = NOW()
+            WHERE id = $9 
+            RETURNING *`;
         const { rows } = await db.query(query, [
             serializedCandidate.companyId,
             serializedCandidate.source,
@@ -85,9 +93,47 @@ class CandidateController {
         ]);
         return rows[0];
     }
-    async deleteCandidate(id: any) {
-        const query = "DELETE FROM candidates WHERE id = $1";
-        await db.query(query, [id]);
+
+    async deleteCandidate(id: string) {
+        const query = "DELETE FROM candidates WHERE id = $1 RETURNING *";
+        const { rows } = await db.query(query, [id]);
+        return rows[0]; // Retorna el candidato eliminado
+    }
+
+    /** 📌 Proceso de CV sin almacenar el archivo **/
+    async processCandidateCV(fileBuffer: Buffer) {
+        try {
+            // 📄 Extraer información del PDF con OpenAI
+            const extractedData = await PDFParser.extractTextFromBuffer(fileBuffer);
+
+            console.log("📌 Datos extraídos del CV:", extractedData);
+
+            // ⛔ Validar datos mínimos antes de guardar
+            if (!extractedData || !extractedData.skills || !extractedData.experience) {
+                throw new Error("Datos extraídos incompletos");
+            }
+
+            // 📝 Crear el candidato en la BD
+            const newCandidate = await db.query(
+                `INSERT INTO candidates (company_id, source, linkedin_profile, resume, skills, experience, education, location, created_at)
+                 VALUES (NULL, 'cv_upload', NULL, $1, $2, $3, $4, $5, NOW()) RETURNING *`,
+                [
+                    JSON.stringify(extractedData),
+                    extractedData.skills.join(", "),
+                    extractedData.experience,
+                    extractedData.education,
+                    extractedData.location ?? "No especificado",
+                ]
+            );
+
+            console.log("✅ Candidato creado con éxito:", newCandidate.rows[0]);
+            return newCandidate.rows[0];
+
+        } catch (error) {
+            console.error("❌ Error procesando el CV:", error);
+            throw new Error("No se pudo procesar el CV");
+        }
     }
 }
+
 export const candidateController = new CandidateController();
