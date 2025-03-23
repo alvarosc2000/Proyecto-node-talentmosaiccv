@@ -1,100 +1,87 @@
 import pdfParse from "pdf-parse";
 import { franc } from "franc";
-import translate from "google-translate-api-x";  // 📌 Traducción automática
+import translate from "google-translate-api-x";
 
 export class PDFParser {
-    static async extractTextFromBuffer(buffer: Buffer) {
-        const data = await pdfParse(buffer);
-        let text = data.text.toLowerCase().replace(/\s+/g, " ");
+    static async extractTextFromBuffer(buffer: Buffer): Promise<any> {
+        try {
+            const data = await pdfParse(buffer);
+            let text: string = data.text.toLowerCase().trim();
 
-        console.log("📌 Texto extraído del PDF:\n", text);
+            if (!text || text.length < 20) {
+                throw new Error("El texto extraído es demasiado corto o no es válido");
+            }
 
-        // 🔹 Eliminar emails
-        text = text.replace(/\S+@\S+\.\S+/g, "[EMAIL REMOVIDO]");
-        
-        // 🔹 Anonimizar nombres cuando aparece "actualidad"
-        text = text.replace(/(\b[a-z]+\s+[a-z]+\b)(?=\s+actualidad)/gi, "[NOMBRE REMOVIDO]");
+            console.log("📌 Texto extraído del PDF:\n", text);
 
-        // 🔹 Detectar idioma del CV
-        const detectedLang = franc(text);
-        console.log("🌍 Idioma detectado:", detectedLang);
+            // 🔹 Eliminar emails y números de teléfono
+            text = text.replace(/\S+@\S+\.\S+/g, "[EMAIL REMOVIDO]");
+            text = text.replace(/\+?\d[\d\s\-\(\)]{8,}/g, "[TELÉFONO REMOVIDO]");
 
-        // 🗣 Traducir a español si no está en español
-        if (detectedLang !== "spa") {
-            console.log("🔄 Traduciendo a español...");
-            const translated = await translate(text, { to: "es" });
-            text = translated.text.toLowerCase();
-            console.log("✅ Texto traducido:\n", text);
+            // 🔹 Detectar idioma
+            const detectedLang: string = franc(text);
+            console.log("🌍 Idioma detectado:", detectedLang);
+
+            // 🔹 Traducir si no está en español
+            if (detectedLang !== "spa") {
+                console.log("🔄 Traduciendo a español...");
+                const translated = await translate(text, { to: "es" });
+                text = translated.text.toLowerCase();
+                console.log("✅ Texto traducido:\n", text);
+            }
+
+            // 🔹 Extraer información clave
+            const aboutMatch = text.match(/resumen\s+([\s\S]*?)(?=\n\w+:|\neducación|$)/);
+            const experienceMatch = text.match(/experiencia laboral\s+([\s\S]*?)(?=\neducación|$)/);
+            const educationMatch = text.match(/educación\s+([\s\S]*?)(?=\nidiomas|$)/);
+            const skillsMatch = text.match(/habilidades\s+([\s\S]*?)(?=\nexperiencia|$)/);
+            const languagesMatch = text.match(/idiomas\s+([\s\S]*?)(?=\ncertificaciones|$)/);
+            const certificationsMatch = text.match(/certificaciones\s+([\s\S]*?)(?=$|\n)/);
+
+            // 🎓 Extraer educación correctamente
+            let education = educationMatch ? educationMatch[1].replace(/\n/g, " ").trim() : "Desconocida";
+
+            // 📅 Extraer años de experiencia correctamente
+            let experience = 0;
+            const yearMatches = [...(experienceMatch ? experienceMatch[1].matchAll(/(\d{4})\s*-\s*(\d{4}|actualidad|presente)/gi) : [])];
+            if (yearMatches.length > 0) {
+                experience = yearMatches.reduce((total, match) => {
+                    const startYear = parseInt(match[1], 10);
+                    const endYear = match[2] === "actualidad" || match[2] === "presente" ? new Date().getFullYear() : parseInt(match[2], 10);
+                    return total + (endYear - startYear);
+                }, 0);
+            }
+            if (experience === 0 && experienceMatch) experience = 1; // Si hay experiencia pero no detecta años, asumimos mínimo 1 año.
+
+            // 🏠 Extraer ubicación (si menciona una ciudad o país)
+            const locationMatch = text.match(/(nueva york|madrid|londres|parís|berlín|barcelona|tokio|méxico df|são paulo)/i);
+            const location = locationMatch ? locationMatch[1] : "Desconocida";
+
+            // 🛠️ Extraer habilidades como lista limpia
+            let skills = skillsMatch ? skillsMatch[1].split(/•|\n|,/).map(s => s.trim()).filter(s => s.length > 2) : ["Desconocidas"];
+
+            // 🌍 Extraer idiomas correctamente
+            let languages = languagesMatch ? languagesMatch[1].split(/\n|•/).map(l => l.trim()).filter(l => l.length > 2) : ["Desconocidos"];
+
+            // 📜 Extraer certificaciones correctamente
+            let certifications = certificationsMatch ? certificationsMatch[1].split(/\n|•/).map(c => c.trim()).filter(c => c.length > 2) : ["Desconocidas"];
+
+            // 📌 Datos extraídos finales
+            const extractedData = {
+                about: aboutMatch ? aboutMatch[1].replace(/\n/g, " ").trim() : "No disponible",
+                experience,
+                education,
+                skills,
+                location,
+                languages,
+                certifications,
+            };
+
+            console.log("📌 Datos extraídos:", extractedData);
+            return extractedData;
+        } catch (error) {
+            console.error("❌ Error al procesar el PDF:", error);
+            return { error: "No se pudo procesar el PDF" };
         }
-
-        // 🔹 Diccionario de secciones
-        const keywords = {
-            about: ["sobre mí", "resumen"],
-            education: ["educación", "formación académica"],
-            experience: ["experiencia laboral", "historial laboral"],
-            skills: ["habilidades", "competencias"],
-            languages: ["idiomas", "lenguas"],
-            location: ["ubicación", "dirección"]
-        };
-
-        // 🔹 Función para extraer secciones
-        function buscarSeccion(texto: string, keywords: string[]): string {
-            const regex = new RegExp(`(?:${keywords.join("|")})(.*?)(?=\\n\\n|$)`, "is");
-            return texto.match(regex)?.[1]?.trim() || "";
-        }
-
-        // 🔹 Extraer información clave
-        const sections = {
-            about: buscarSeccion(text, keywords.about),
-            education: buscarSeccion(text, keywords.education),
-            experience: buscarSeccion(text, keywords.experience),
-            skills: buscarSeccion(text, keywords.skills),
-            languages: buscarSeccion(text, keywords.languages),
-            location: buscarSeccion(text, keywords.location)
-        };
-
-        // 🎓 Extraer educación (evitar "No especificado")
-        let education = sections.education.trim();
-        if (!education || education.length < 5) education = "Desconocido";
-
-        // 📅 Extraer experiencia como número
-        let experience = 0;
-        const experienceMatches = [...sections.experience.matchAll(/(\d{4})\s*-\s*(\d{4}|actualidad|presente)/gi)];
-        if (experienceMatches.length > 0) {
-            experience = experienceMatches.reduce((total, match) => {
-                const startYear = parseInt(match[1], 10);
-                const endYear = match[2] === "actualidad" || match[2] === "presente" ? new Date().getFullYear() : parseInt(match[2], 10);
-                return total + (endYear - startYear);
-            }, 0);
-        }
-        if (experience === 0 && experienceMatches.length > 0) experience = 1;
-
-        // 🛠 Extraer habilidades (lista limpia)
-        let skillsList: string[] = [];
-        if (sections.skills) {
-            skillsList = sections.skills.split(/[,.-]/).map(skill => skill.trim()).filter(skill => skill.length > 2);
-        }
-
-        // 📍 Extraer ubicación (evitar "No especificado")
-        let location = sections.location.trim();
-        if (!location) {
-            const cityMatch = text.match(/\b(madrid|barcelona|málaga|valencia|sevilla|bilbao|granada|zaragoza|murcia|alicante|córdoba|valladolid|santander|toledo|salamanca|vigo|gijón|la coruña|oviedo|almería)\b/i);
-            if (cityMatch) location = cityMatch[0].trim();
-        }
-        if (!location) location = "Desconocida";
-
-        // 📌 Datos extraídos finales (evitando errores)
-        const extractedData = {
-            about: sections.about || "Desconocido",
-            experience,
-            education,
-            skills: skillsList.length > 0 ? skillsList : ["Desconocidas"],
-            location,
-            languages: sections.languages || "Desconocidos"
-        };
-
-        console.log("📌 Datos extraídos:", extractedData);
-
-        return extractedData;
     }
 }

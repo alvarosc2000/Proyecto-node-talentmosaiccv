@@ -52,6 +52,7 @@ class CandidateController {
             INSERT INTO candidates (company_id, source, linkedin_profile, resume, skills, experience, education, location, created_at) 
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW()) 
             RETURNING *`;
+        
         const { rows } = await db.query(query, [
             serializedCandidate.companyId,
             serializedCandidate.source,
@@ -80,6 +81,7 @@ class CandidateController {
                 updated_at = NOW()
             WHERE id = $9 
             RETURNING *`;
+        
         const { rows } = await db.query(query, [
             serializedCandidate.companyId,
             serializedCandidate.source,
@@ -100,40 +102,134 @@ class CandidateController {
         return rows[0]; // Retorna el candidato eliminado
     }
 
-    /** 📌 Proceso de CV sin almacenar el archivo **/
+    private SECTION_KEYWORDS: Record<string, string[]> = {
+        experience: [
+            "experience", "work experience", "employment history", "career history",
+            "job experience", "professional experience", "work history", "relevant experience",
+            "background", "historial laboral", "experiencia profesional", "empleo",
+            "trayectoria profesional", "historia laboral", "vida laboral", "historial de trabajo",
+            "carrera profesional", "puestos desempeñados", "proyectos profesionales", "mis trabajos"
+        ],
+        education: [
+            "education", "academic background", "studies", "educational background",
+            "schooling", "academic history", "training", "educational qualifications",
+            "formation", "diplomas", "certificaciones académicas", "titulaciones", "nivel educativo",
+            "grados obtenidos", "carrera universitaria", "universidad", "institución académica",
+            "preparación académica", "postgrados", "doctorados", "formación complementaria"
+        ],
+        skills: [
+            "skills", "technical skills", "competencies", "abilities", "capabilities",
+            "hard skills", "soft skills", "aptitudes", "expertise", "tech stack",
+            "tools used", "habilidades", "conocimientos", "aptitudes técnicas",
+            "capacidades", "conocimientos técnicos", "habilidades digitales",
+            "habilidades profesionales", "software manejado", "conocimientos específicos",
+            "tecnologías manejadas", "frameworks", "librerías", "lenguajes de programación"
+        ],
+        languages: [
+            "languages", "spoken languages", "language proficiency", "linguistic abilities",
+            "bilingual", "multilingual", "fluency", "idiomas", "lenguas habladas",
+            "conocimientos de idiomas", "competencias lingüísticas", "idiomas dominados",
+            "idiomas hablados", "idiomas conocidos", "lenguas extranjeras", "fluidez en idiomas",
+            "niveles de idioma", "idiomas nativos", "lenguaje de negocios"
+        ],
+        certifications: [
+            "certifications", "certs", "diplomas", "professional certifications",
+            "training", "credentials", "licenses", "accreditations", "certifications obtained",
+            "certificaciones", "cursos", "diplomados", "títulos", "licencias profesionales",
+            "habilitaciones", "formación especializada", "certificados de competencia",
+            "cursos aprobados", "certificados oficiales"
+        ],
+        projects: [
+            "projects", "portfolio", "side projects", "freelance work", "research projects",
+            "trabajos freelance", "proyectos personales", "colaboraciones", "investigaciones",
+            "desarrollo de proyectos", "trabajos previos", "implementaciones"
+        ],
+        personal_info: [
+            "personal information", "contact details", "profile", "perfil",
+            "información personal", "datos personales", "contacto",
+            "nombre", "correo electrónico", "dirección", "teléfono",
+            "perfil profesional", "resumen personal", "bio", "sobre mí"
+        ],
+        academic_data: [
+            "degrees", "diplomas", "postgraduate", "phd", "masters", "doctorate",
+            "títulos universitarios", "estudios superiores", "especializaciones",
+            "maestrías", "doctorados", "grados académicos", "investigaciones académicas"
+        ]
+    };
+
+    private mapSections(text: string): Record<string, string | string[]> {
+        if (typeof text !== "string") {
+            console.error("Error: El texto no es un string", text);
+            return {};
+        }
+    
+        const sections: Record<string, string | string[]> = {
+            about: "",
+            experience: "",
+            education: "",
+            skills: [],
+            location: "",
+            languages: "",
+            certifications: "",
+            projects: "",
+            academic_data: "",
+        };
+    
+        const lines = text.split("\n").map(line => line.trim().toLowerCase());
+        let currentSection: string | null = null;
+    
+        for (const line of lines) {
+            for (const [section, keywords] of Object.entries(this.SECTION_KEYWORDS)) {
+                if (keywords.some((keyword) => line.includes(keyword.toLowerCase()))) {
+                    currentSection = section;
+                    break;
+                }
+            }
+    
+            if (currentSection) {
+                if (Array.isArray(sections[currentSection])) {
+                    (sections[currentSection] as string[]).push(line);
+                } else {
+                    sections[currentSection] = (sections[currentSection] as string) + "\n" + line;
+                }
+            }
+        }
+    
+        return sections;
+    }
+
     async processCandidateCV(fileBuffer: Buffer) {
         try {
-            // 📄 Extraer información del PDF con OpenAI
             const extractedData = await PDFParser.extractTextFromBuffer(fileBuffer);
-
-            console.log("📌 Datos extraídos del CV:", extractedData);
-
-            // ⛔ Validar datos mínimos antes de guardar
-            if (!extractedData || !extractedData.skills || !extractedData.experience) {
-                throw new Error("Datos extraídos incompletos");
+    
+            if (!extractedData || extractedData.error) {
+                throw new Error("No se pudo extraer información válida del CV.");
             }
-
-            // 📝 Crear el candidato en la BD
-            const newCandidate = await db.query(
-                `INSERT INTO candidates (company_id, source, linkedin_profile, resume, skills, experience, education, location, created_at)
-                 VALUES (NULL, 'cv_upload', NULL, $1, $2, $3, $4, $5, NOW()) RETURNING *`,
+    
+            console.log("📌 Datos extraídos y organizados:", extractedData);
+    
+            const newCandidate = await db.query(`
+                INSERT INTO candidates (company_id, source, resume, skills, experience, education, location, created_at)
+                VALUES (NULL, 'cv_upload', $1, $2, $3, $4, $5, NOW()) RETURNING *`,
                 [
                     JSON.stringify(extractedData),
                     extractedData.skills.join(", "),
                     extractedData.experience,
                     extractedData.education,
-                    extractedData.location ?? "No especificado",
+                    extractedData.location
                 ]
             );
-
+    
             console.log("✅ Candidato creado con éxito:", newCandidate.rows[0]);
             return newCandidate.rows[0];
-
+    
         } catch (error) {
             console.error("❌ Error procesando el CV:", error);
             throw new Error("No se pudo procesar el CV");
         }
     }
+    
+    
 }
 
 export const candidateController = new CandidateController();
