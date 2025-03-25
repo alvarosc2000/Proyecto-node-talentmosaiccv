@@ -12,6 +12,8 @@ import { mergedResolvers } from "./resolvers/resolver";
 import cvRouter from "./routes/cv";
 import feedbackLogRoutes from "./routes/feedbackLogRoutes";
 import aiTrainingDataRoutes from "./routes/aiTrainingDataRoutes";
+import jobRoutes from "./routes/jobRoutes";
+import candidateRankingRoutes from "./routes/candidateRankingRoutes";
 
 dotenv.config();
 
@@ -51,7 +53,9 @@ async function startServer() {
   app.use("/api/cv", cvRouter);
   app.use("/api/feedback-logs", feedbackLogRoutes);
   app.use("/api/training-data", aiTrainingDataRoutes);
-
+  app.use("/api/jobs", jobRoutes);
+  app.use("/api/candidates/rankings", candidateRankingRoutes);
+  
   // Ruta principal
   app.get("/", (req, res) => {
     res.send("TalentMosaicCV AI Backend Running...");

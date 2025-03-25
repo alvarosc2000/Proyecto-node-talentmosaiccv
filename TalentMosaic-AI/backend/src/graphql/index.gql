@@ -65,17 +65,16 @@ type Candidate {
 type CandidateRanking {
     id: ID!
     applicationId: ID!
-    score: Int
-    ranking: Int
-    createdAt: String
-  }
+    score: Int!
+    ranking: Int!
+    createdAt: String!
+}
 
-  # Entrada para crear o actualizar un ranking de candidato
-  input CreateRankingInput {
+input CandidateRankingInput {
     applicationId: ID!
     score: Int!
     ranking: Int!
-  }
+}
 
  # Esquema de CandidateFeedback
   type CandidateFeedback {
@@ -172,6 +171,14 @@ type Job {
   }
 
 
+  input CreateRankingInput {
+    jobId: ID!
+  }
+
+  input CreateRankingInput {
+    jobId: ID!
+  }
+
 
 type Query {
   getAllUsers: [User]
@@ -189,8 +196,8 @@ type Query {
   getAllCandidates: [Candidate]
   getCandidateById(id: ID!): Candidate
 
-  getAllRankings: [CandidateRanking]
-  getRankingById(id: ID!): CandidateRanking
+  getRanking(jobId: ID!): [CandidateRanking]
+  getCandidateRanking(candidateId: ID!): CandidateRanking
 
   getAllFeedbacks: [CandidateFeedback]
   getFeedbackById(id: ID!): CandidateFeedback
@@ -217,6 +224,7 @@ type Mutation {
   createCandidate(input: CreateCandidateInput): Candidate
   updateCandidate(id: ID!, input: CreateCandidateInput): Candidate
   deleteCandidate(id: ID!): Boolean
+
 
   createApplication(input: CreateApplicationInput): Application
   updateApplication(id: ID!, input: CreateApplicationInput): Application

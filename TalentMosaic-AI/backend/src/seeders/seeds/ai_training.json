@@ -1,7 +1,7 @@
 [
     {
       "id": "b66e8dff-17cb-4844-95b4-f1e570d94ecb",
-      "candidateId": "d7ce3f5b-b1ae-4922-a1ab-03c01a0a910d",
+      "candidateId": "e1db4ed7-5b71-4267-93f2-dc66caf0d1da",
       "jobId": "9e587363-6bab-4753-8674-546fae482321",
       "features": {
         "skills": ["JavaScript", "React", "Node.js"],
@@ -13,7 +13,7 @@
     },
     {
       "id": "169d7610-19e1-4679-b8d6-39f4a8f6cc93",
-      "candidateId": "14c25d65-22de-400e-b5d7-e26338327299",
+      "candidateId": "c9d2d172-e24b-40c9-ac3b-c36ecd18cf26",
       "jobId": "7f160a16-a9a4-4739-a746-f74ba562ecdf",
       "features": {
         "skills": ["Python", "Django", "Machine Learning"],
