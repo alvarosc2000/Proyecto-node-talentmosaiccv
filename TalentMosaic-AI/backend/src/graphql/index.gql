@@ -63,11 +63,11 @@ type Candidate {
   }
 
 type CandidateRanking {
-    id: ID!
-    applicationId: ID!
-    score: Int!
-    ranking: Int!
-    createdAt: String!
+    id: ID
+    applicationId: ID
+    score: Int
+    ranking: Int
+    createdAt: String
 }
 
 input CandidateRankingInput {
@@ -108,14 +108,14 @@ type Job {
 
   # Entrada para crear o actualizar un trabajo
   input CreateJobInput {
-    companyId: ID!
-    jobTitle: String!
-    description: String!
-    location: String!
-    experienceRequired: Int!
-    skillsRequired: String!
-    educationRequired: String!
-    salaryRange: String!
+    companyId: ID
+    jobTitle: String
+    description: String
+    location: String
+    experienceRequired: Int
+    skillsRequired: String
+    educationRequired: String
+    salaryRange: String
   }
 
  # Esquema de Application

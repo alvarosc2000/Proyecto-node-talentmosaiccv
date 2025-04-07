@@ -97,29 +97,41 @@ class UserController {
 
   // 🔹 Actualizar un usuario
   async updateUser(id: string, user: any) {
-    const serializedUser = this.serialize(user);
-    const query = `UPDATE users SET 
-                   company_id = COALESCE($1, company_id), 
-                   first_name = COALESCE($2, first_name), 
-                   last_name = COALESCE($3, last_name), 
-                   email = COALESCE($4, email), 
-                   password = COALESCE($5, password), 
-                   role = COALESCE($6, role), 
-                   linkedin_token = COALESCE($7, linkedin_token), 
-                   updated_at = NOW() 
-                   WHERE id = $8 RETURNING *`;
-    const { rows } = await db.query(query, [
-      serializedUser.companyId,
-      serializedUser.firstName,
-      serializedUser.lastName,
-      serializedUser.email,
-      serializedUser.password,
-      serializedUser.role,
-      serializedUser.linkedInToken,
-      id,
-    ]);
-    return rows[0];  // Devuelve el usuario actualizado
+    const fields: string[] = [];
+    const values: any[] = [];
+    let idx = 1;
+  
+    for (const [key, value] of Object.entries(user)) {
+      if (value === null || value === undefined) continue;
+  
+      // Convertir camelCase a snake_case
+      const column = key.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+      fields.push(`${column} = $${idx}`);
+      values.push(value);
+      idx++;
+    }
+  
+    if (fields.length === 0) {
+      throw new Error("No se proporcionaron campos válidos para actualizar.");
+    }
+  
+    // Siempre actualizar el campo updated_at
+    fields.push(`updated_at = NOW()`);
+  
+    // Añadir la cláusula WHERE con el ID
+    const query = `UPDATE users SET ${fields.join(', ')} WHERE id = $${idx} RETURNING *`;
+    values.push(id);
+  
+    const { rows } = await db.query(query, values);
+    
+    if (rows.length === 0) {
+      throw new Error("Usuario no encontrado o no actualizado.");
+    }
+  
+    // ✅ Retornar los campos correctamente deserializados
+    return this.deserialize(rows[0]);
   }
+  
 
   // 🔹 Eliminar un usuario
   async deleteUser(id: string): Promise<void> {

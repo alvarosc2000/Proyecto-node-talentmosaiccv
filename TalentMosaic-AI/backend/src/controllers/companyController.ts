@@ -1,5 +1,8 @@
 import db from "../config/db";
+import { v4 as uuidv4 } from 'uuid';
+
 class CompanyController {
+    // Serializa el objeto company
     serialize(company: any) {
         return {
             id: company.id,
@@ -10,6 +13,8 @@ class CompanyController {
             updatedAt: company.updatedAt
         };
     }
+
+    // Deserializa la fila de la base de datos
     deserialize(row: any) {
         return {
             id: row.id,
@@ -20,47 +25,73 @@ class CompanyController {
             updatedAt: row.updated_at
         };
     }
+
+    // Obtener todas las compañías
     async getAllCompanies() {
-        const query = "SELECT * FROM COMPANIES";
+        const query = "SELECT * FROM companies";
         const { rows } = await db.query(query);
         return rows.map(this.deserialize);
     }
+
+    // Obtener una compañía por ID
     async getCompanyById(id: any) {
-        const query = "SELECT * FROM COMPANIES WHERE id = $1";
+        const query = "SELECT * FROM companies WHERE id = $1";
         const { rows } = await db.query(query, [id]);
         return rows.length > 0 ? this.deserialize(rows[0]) : null;
     }
+
+    // Crear una nueva compañía
     async createCompany(company: any) {
         const serializedCompany = this.serialize(company);
-        const query = `INSERT INTO companies (id, name, industry, size, created_at)
-                       VALUES ($1, $2, $3, $4, NOW())`;
+        const query = `
+            INSERT INTO companies (id, name, industry, size, created_at)
+            VALUES ($1, $2, $3, $4, NOW())
+            RETURNING *`;
+        
         const result = await db.query(query, [
-            serializedCompany.id,
+            uuidv4(), // Genera el UUID aquí
             serializedCompany.name,
             serializedCompany.industry,
             serializedCompany.size,
         ]);
-        return result.rows[0];
+        
+        return this.deserialize(result.rows[0]);
     }
+    
+    
+    // Eliminar una compañía
     async deleteCompany(id: any) {
         const query = "DELETE FROM companies WHERE id = $1";
         await db.query(query, [id]);
     }
+
+    // Actualizar una compañía
     async updateCompany(id: any, company: any) {
-        const serializedCompany = this.serialize(company);
-        const query = ` UPDATE companies SET
-                        name = COALESCE($1, name),
-                        industry = COALESCE($2, industry)
-                        size = COALESCE($3, size)
-                        updated_at = NOW(),
-                        WHERE id = $4 RETURNING *`;
-        const { rows } = await db.query(query, [
-            serializedCompany.name,
-            serializedCompany.industry,
-            serializedCompany.size,
-            id,
-        ]);
-        return rows[0];
+        const fields: string[] = [];
+        const values: any[] = [];
+        let idx = 1;
+
+        for (const [key, value] of Object.entries(company)) {
+            if (value === null || value === undefined) continue;
+
+            // Convertir de camelCase a snake_case
+            const column = key.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+            fields.push(`${column} = $${idx}`);
+            values.push(value);
+            idx++;
+        }
+
+        if (fields.length === 0) {
+            throw new Error("No se proporcionaron campos válidos para actualizar.");
+        }
+
+        fields.push(`updated_at = NOW()`); // Actualiza el campo updated_at
+        const query = `UPDATE companies SET ${fields.join(', ')} WHERE id = $${idx} RETURNING *`;
+        values.push(id);
+
+        const { rows } = await db.query(query, values);
+        return rows.length > 0 ? this.deserialize(rows[0]) : null; // Retornar el resultado deserializado
     }
 }
+
 export const companyController = new CompanyController();

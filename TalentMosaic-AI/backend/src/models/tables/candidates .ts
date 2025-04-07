@@ -2,6 +2,7 @@ import {pgEnum, integer, uuid, pgTable, varchar, timestamp } from "drizzle-orm/p
 import * as t from "drizzle-orm/pg-core";
 
 import { Company } from "./company";
+import { Job } from "./jobs";
 
 export const sourceEnum = pgEnum("source", ["linkedin" , "cv_upload"]);
 
