@@ -6,7 +6,7 @@ import translate from "google-translate-api-x";
 const sectionAliases: Record<string, string[]> = {
     resume: [
         "resumen", "perfil", "sobre mí", "introducción", "summary", "about me", "profile", "biografía", 
-        "career summary", "professional summary", "personal statement", "objectives", "goal", "objetivos"
+        "career summary", "Perfil Profesional", "professional summary", "personal statement", "objectives", "goal", "objetivos"
     ],
     education: [
         "educación", "datos académicos", "formación académica", "estudios", "títulos", "academic background",

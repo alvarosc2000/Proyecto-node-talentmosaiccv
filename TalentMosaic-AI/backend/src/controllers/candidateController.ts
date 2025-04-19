@@ -108,7 +108,7 @@ class CandidateController {
             "job experience", "professional experience", "work history", "relevant experience",
             "background", "historial laboral", "experiencia profesional", "empleo",
             "trayectoria profesional", "historia laboral", "vida laboral", "historial de trabajo",
-            "carrera profesional", "puestos desempeñados", "proyectos profesionales", "mis trabajos"
+            "carrera profesional", "Perfil Profesional","puestos desempeñados", "proyectos profesionales", "mis trabajos"
         ],
         education: [
             "education", "academic background", "studies", "educational background",
