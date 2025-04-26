@@ -1,30 +1,35 @@
 [
   {
     "id": "ba8c9329-fe55-48fa-b81d-5a08fdb7bb8c",
+    "userId": "a791db68-7f66-4895-b58e-d02454430d20",
     "name": "TechCorp",
     "industry": "Technology",
     "size": 500
   },
   {
     "id": "e389cd16-fb04-4f92-89b0-f53f7399b4f7",
+    "userId": "a791db68-7f66-4895-b58e-d02454430d20",
     "name": "InnovateX",
     "industry": "Consulting",
     "size": 120
   },
   {
     "id": "56ab70c2-85c1-4db1-8f5a-3e6f60a8b679",
+    "userId": "a791db68-7f66-4895-b58e-d02454430d20",
     "name": "CodeWorks",
     "industry": "Software Development",
     "size": 200
   },
   {
     "id": "cbf3020e-79a9-49e6-bf7b-662544fead6a",
+    "userId": "a791db68-7f66-4895-b58e-d02454430d20",
     "name": "CloudTech",
     "industry": "Cloud Solutions",
     "size": 50
   },
   {
     "id": "9d0b8a34-b5ae-453a-b79b-d1cc28c03259",
+    "userId": "a791db68-7f66-4895-b58e-d02454430d20",
     "name": "DesignStudio",
     "industry": "Design & Marketing",
     "size": 80

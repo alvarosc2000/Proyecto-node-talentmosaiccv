@@ -7,7 +7,6 @@ export const rolesEnum = pgEnum("role", ["admin", "recruiter", "manager"]);
 
 const User = pgTable("users", {
   id: uuid("id").defaultRandom().primaryKey(),
-  companyId: uuid("company_id").references(() => Company.id),
   firstName: varchar("first_name", { length: 255 }),
   lastName: varchar("last_name", { length: 255 }),
   email: varchar("email", { length: 255 }).unique(),

@@ -21,6 +21,7 @@ input CreateUserInput {
 
 type Company{
     id: ID
+    userId: ID
     name: String
     industry: String
     size: Int
@@ -185,7 +186,8 @@ type Query {
   getUserById(id: ID!): User
 
   getAllCompanies: [Company]
-  getCompany(id: ID!): Company
+  getCompany(id: ID!): [Company]
+  getMyCompany: Company
 
   getAllJobs: [Job]
   getJobById(id: ID!): Job

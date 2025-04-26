@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
@@ -10,16 +9,15 @@ export default function Auth() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [companyName, setCompanyName] = useState('');
-  const [industry, setIndustry] = useState('');
-  const [companySize, setCompanySize] = useState('');
   const [error, setError] = useState('');
+  const [token, setToken] = useState('');  // Nuevo estado para el token
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
+    // Validaciones previas al envío de los datos
     if (!email || !password) {
       setError('Por favor completa todos los campos.');
       return;
@@ -31,37 +29,79 @@ export default function Auth() {
         return;
       }
 
-      if (!firstName || !lastName || !companyName || !industry || companySize <= '0') {
-        setError('Completa todos los datos de registro.');
+      if (!firstName || !lastName) {
+        setError('Por favor, completa todos los datos de registro.');
         return;
       }
     }
 
+    // La consulta GraphQL se ajusta según si es login o register
+    const query = isLogin
+      ? `
+        mutation Login($email: String!, $password: String!) {
+          login(input: {email: $email, password: $password}) {
+            token
+            user {
+              id
+              email
+              role
+            }
+          }
+        }
+      `
+      : `
+        mutation Register($input: CreateUserInput!) {
+          register(input: $input) {
+            id
+            email
+            firstName
+            lastName
+            role
+          }
+        }
+      `;
+
+    const variables = isLogin
+      ? { email, password }
+      : {
+          input: {
+            email,
+            password,
+            firstName,
+            lastName,
+            role: 'recruiter', // Puedes cambiar este valor si es necesario
+          },
+        };
+
     try {
-      const response = await fetch(isLogin ? '/api/auth/login' : '/api/auth/register', {
+      // Hacer la solicitud a la API de GraphQL
+      const response = await fetch('http://localhost:5000/graphql', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          email,
-          password,
-          ...(isLogin ? {} : { confirmPassword, firstName, lastName, companyName, industry, companySize }),
-        }),
+        body: JSON.stringify({ query, variables }),
       });
 
-      const data = await response.json();
+      const { data, errors } = await response.json();
 
-      if (response.ok) {
-        if (isLogin) {
-          router.push('/dashboard');
-        } else {
-          setError('Se ha enviado un correo de confirmación. Revisa tu bandeja de entrada.');
-        }
-      } else {
-        setError(data.error || 'Algo salió mal, inténtalo de nuevo.');
+      // Manejar errores si los hay
+      if (errors) {
+        setError(errors[0]?.message || 'Ocurrió un error inesperado.');
+        return;
       }
-    } catch {
+
+      // Si es login, guardar el token y redirigir
+      if (isLogin && data.login.token) {
+        setToken(data.login.token);  // Guardar el token en el estado
+        localStorage.setItem('token', data.login.token);
+        router.push('/company');
+      } else if (!isLogin) {
+        setError('Registro exitoso. Ahora puedes iniciar sesión.');
+        setIsLogin(true); // Cambia a la vista de login después de registrarse
+      }
+    } catch (err) {
+      console.error(err);
       setError('Error de conexión, por favor intenta más tarde.');
     }
   };
@@ -89,6 +129,16 @@ export default function Auth() {
             animate={{ opacity: 1 }}
           >
             {error}
+          </motion.p>
+        )}
+
+        {token && (  // Mostrar el token si está disponible
+          <motion.p
+            className="text-green-400 bg-green-900 p-2 rounded-lg mt-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            Token: {token}
           </motion.p>
         )}
 
@@ -130,28 +180,6 @@ export default function Auth() {
                 className="w-full p-3 rounded-lg bg-gray-700 border-2 border-transparent focus:border-indigo-400 focus:ring-2 focus:ring-indigo-600 text-white"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Nombre de la empresa"
-                className="w-full p-3 rounded-lg bg-gray-700 border-2 border-transparent focus:border-indigo-400 focus:ring-2 focus:ring-indigo-600 text-white"
-                value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Industria"
-                className="w-full p-3 rounded-lg bg-gray-700 border-2 border-transparent focus:border-indigo-400 focus:ring-2 focus:ring-indigo-600 text-white"
-                value={industry}
-                onChange={(e) => setIndustry(e.target.value)}
-              />
-              <input
-                type="number"
-                placeholder="Tamaño de la empresa"
-                className="w-full p-3 rounded-lg bg-gray-700 border-2 border-transparent focus:border-indigo-400 focus:ring-2 focus:ring-indigo-600 text-white"
-                value={companySize}
-                onChange={(e) => setCompanySize(e.target.value)}
-                min="1"
               />
             </>
           )}

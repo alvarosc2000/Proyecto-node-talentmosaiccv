@@ -1,12 +1,28 @@
 # Ignorar node_modules en frontend y backend
 frontend/node_modules/
+backend/node_modules/
+
+# Ignorar .next (carpeta de compilación de Next.js)
 frontend/.next/
 
-backend/node_modules/
-backend/uploads
+# Ignorar archivos de entorno
+frontend/.env
+backend/.env
+.env
 
 # Ignorar dist en backend
 backend/dist/
+backend/migrations/
 
-# Ignorar migrations en frontend
+# Ignorar uploads (o cualquier carpeta con archivos temporales o subidos)
+backend/uploads/
+
+# Ignorar migrations en frontend (si existiera)
 frontend/migrations/
+
+# Ignorar archivos de logs
+*.log
+
+# Ignorar archivos del sistema operativo
+.DS_Store
+Thumbs.db

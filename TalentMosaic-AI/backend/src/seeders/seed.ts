@@ -44,8 +44,8 @@ const seedDatabase = async () => {
     const aiTraining = loadJson ("./ai_training.json");
 
     console.log("🚀 Insertando datos...");
-    await db.insert(Company).values(companies);
     await db.insert(User).values(users);
+    await db.insert(Company).values(companies);
     await db.insert(Candidate).values(candidates);
     await db.insert(Job).values(jobs);
     await db.insert(Application).values(applications);

@@ -1,7 +1,6 @@
 [
   {
     "id": "a791db68-7f66-4895-b58e-d02454430d20",
-    "companyId": "ba8c9329-fe55-48fa-b81d-5a08fdb7bb8c",
     "firstName": "John",
     "lastName": "Doe",
     "email": "john.doe@techcorp.com",
@@ -11,7 +10,6 @@
   },
   {
     "id": "672efac3-7228-4536-ab62-805a9a3cc6cf",
-    "companyId": "e389cd16-fb04-4f92-89b0-f53f7399b4f7",
     "firstName": "Jane",
     "lastName": "Smith",
     "email": "jane.smith@innovatex.com",
@@ -21,7 +19,6 @@
   },
   {
     "id": "f5a0a43f-948f-4bc5-8b52-c9c6b4ea52ff",
-    "companyId": "56ab70c2-85c1-4db1-8f5a-3e6f60a8b679",
     "firstName": "Alice",
     "lastName": "Johnson",
     "email": "alice.johnson@codeworks.com",
@@ -31,7 +28,6 @@
   },
   {
     "id": "2cf20736-ff1e-4a9d-9a9e-bc2d799b3c5a",
-    "companyId": "cbf3020e-79a9-49e6-bf7b-662544fead6a",
     "firstName": "Mark",
     "lastName": "Taylor",
     "email": "mark.taylor@cloudtech.com",
@@ -41,7 +37,6 @@
   },
   {
     "id": "89b367e7-d85a-459b-8857-d017346c4300",
-    "companyId": "9d0b8a34-b5ae-453a-b79b-d1cc28c03259",
     "firstName": "Eva",
     "lastName": "Davis",
     "email": "eva.davis@designstudio.com",
@@ -51,7 +46,6 @@
   },
   {
     "id": "9cf3f69f-01b4-4295-b015-fc85f3a4d515",
-    "companyId": "ba8c9329-fe55-48fa-b81d-5a08fdb7bb8c",
     "firstName": "Michael",
     "lastName": "Brown",
     "email": "michael.brown@techcorp.com",
@@ -61,7 +55,6 @@
   },
   {
     "id": "3a122f7e-72a4-4ab0-bba6-62cb1a2f8b89",
-    "companyId": "e389cd16-fb04-4f92-89b0-f53f7399b4f7",
     "firstName": "Sophia",
     "lastName": "Williams",
     "email": "sophia.williams@innovatex.com",
@@ -71,7 +64,6 @@
   },
   {
     "id": "c928a8a6-fb71-4702-b8a7-3bb98c8b01db",
-    "companyId": "56ab70c2-85c1-4db1-8f5a-3e6f60a8b679",
     "firstName": "James",
     "lastName": "Miller",
     "email": "james.miller@codeworks.com",
@@ -81,7 +73,6 @@
   },
   {
     "id": "bc49e7cd-48de-427b-98ad-808283848302",
-    "companyId": "cbf3020e-79a9-49e6-bf7b-662544fead6a",
     "firstName": "David",
     "lastName": "Wilson",
     "email": "david.wilson@cloudtech.com",
@@ -91,7 +82,6 @@
   },
   {
     "id": "5a51a6db-40d4-40f0-a6de-17f978fa8b9f",
-    "companyId": "9d0b8a34-b5ae-453a-b79b-d1cc28c03259",
     "firstName": "Olivia",
     "lastName": "Moore",
     "email": "olivia.moore@designstudio.com",

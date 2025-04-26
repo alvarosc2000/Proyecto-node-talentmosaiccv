@@ -15,6 +15,7 @@ import aiTrainingDataRoutes from "./routes/aiTrainingDataRoutes";
 import jobRoutes from "./routes/jobRoutes";
 import candidateRankingRoutes from "./routes/candidateRankingRoutes";
 import loginRoutes from "./routes/loginRoutes";
+import jwt from 'jsonwebtoken';
 
 dotenv.config();
 
@@ -46,9 +47,21 @@ async function startServer() {
     "/graphql",
     express.json(),
     expressMiddleware(server, {
-      context: async ({ req }) => ({ token: req.headers.authorization || "" }),
-    })
+      context: async ({ req }: any) => {
+        const authHeader = req.headers.authorization || "";
+        const token = authHeader.replace("Bearer ", "");
+  
+        try {
+          const user = jwt.verify(token, process.env.JWT_SECRET!);
+          return { user };
+        } catch {
+          return { user: null };
+        }
+      },
+    }) as unknown as express.RequestHandler  // 👈 Forzamos que TS deje de quejarse
   );
+  
+  
 
   // **💡 Mover las rutas REST después de Apollo**
   app.use("/api/cv", cvRouter);

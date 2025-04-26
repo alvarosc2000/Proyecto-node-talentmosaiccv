@@ -9,10 +9,23 @@ const resolversCompany = {
         },
     },
     Mutation: {
-        createCompany: async (_: any, { input }: { input: any }) => {
-            const newUser = await companyController.createCompany(input);
-            return newUser;
+        createCompany: async (_: any, { input }: { input: any }, context: any) => {
+            // Asegúrate de que el usuario esté autenticado
+            if (!context.user) {
+                throw new Error('Usuario no autenticado');
+            }
+        
+            const { userId } = context.user;  // Asumiendo que el `userId` está en el contexto
+        
+            // Agregar `userId` al `input`
+            const newCompany = await companyController.createCompany({
+                ...input,     // Spread del resto de la información del input (name, industry, size, etc.)
+                userId,       // Agregar el `userId` desde el contexto
+            });
+        
+            return newCompany;
         },
+        
         updateCompany: async (_: any, { id, input }: { id: string, input: any }) => {
             const updatedUser = await companyController.updateCompany(id, input);
             return updatedUser;
