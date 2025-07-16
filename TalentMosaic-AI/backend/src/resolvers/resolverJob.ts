@@ -9,10 +9,12 @@ const resolversJob = {
         },
     },
     Mutation: {
-        createJob:async (_: any, { input }: { input: any }) => {
-            const newJob = await jobController.createJob(input);
-            return newJob;
-        },
+        createJob: async (_: any, { input }: { input: any }, context: { user: { id: any; }; }) => {
+        const userId = context.user.id; // suponiendo que lo tengas en el token
+        const newJob = await jobController.createJob({ ...input, userId });
+        return newJob;
+        }
+        ,
         updateJob: async (_: any, { id, input }: { id: string, input: any }) => {
             const updatedJob = await jobController.updateJob(id, input);
             return updatedJob;

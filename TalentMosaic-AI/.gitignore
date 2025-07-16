@@ -13,12 +13,14 @@ backend/.env
 # Ignorar dist en backend
 backend/dist/
 backend/migrations/
+backend/node_modules/
 
 # Ignorar uploads (o cualquier carpeta con archivos temporales o subidos)
 backend/uploads/
 
 # Ignorar migrations en frontend (si existiera)
 frontend/migrations/
+frontend/node_modules/
 
 # Ignorar archivos de logs
 *.log

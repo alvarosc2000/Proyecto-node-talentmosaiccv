@@ -109,7 +109,7 @@ type Job {
 
   # Entrada para crear o actualizar un trabajo
   input CreateJobInput {
-    companyId: ID
+    userId: String
     jobTitle: String
     description: String
     location: String
@@ -117,6 +117,7 @@ type Job {
     skillsRequired: String
     educationRequired: String
     salaryRange: String
+    status: Boolean
   }
 
  # Esquema de Application

@@ -27,10 +27,11 @@ RUN npm install
 COPY . .
 
 # Compilar TypeScript a JavaScript (si es necesario)
-RUN npm run build
+# RUN npm run build
 
 # Exponer el puerto de la API
 EXPOSE 5000
 
 # Iniciar la aplicación
-CMD ["npm", "run", "start"]
+# CMD ["npm", "run", "start"]
+CMD ["npx", "tsx", "src/app.ts"]

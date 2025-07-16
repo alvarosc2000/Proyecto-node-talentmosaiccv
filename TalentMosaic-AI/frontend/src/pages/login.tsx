@@ -95,7 +95,7 @@ export default function Auth() {
       if (isLogin && data.login.token) {
         setToken(data.login.token);  // Guardar el token en el estado
         localStorage.setItem('token', data.login.token);
-        router.push('/company');
+        router.push('/dashborard');
       } else if (!isLogin) {
         setError('Registro exitoso. Ahora puedes iniciar sesión.');
         setIsLogin(true); // Cambia a la vista de login después de registrarse

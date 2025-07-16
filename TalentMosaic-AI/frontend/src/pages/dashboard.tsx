@@ -11,22 +11,32 @@ export default function Dashboard() {
     { id: 2, title: 'Data Scientist', company: 'AI Labs', location: 'San Francisco, CA', status: 'open', description: 'Experiencia en Machine Learning, Python y análisis de datos.' },
   ]);
 
-  const [candidates, setCandidates] = useState([
+  const [candidates] = useState([
     { id: 1, firstName: 'Juan', lastName: 'Pérez', email: 'juan@example.com', experience: '5 años', score: 95 },
     { id: 2, firstName: 'Ana', lastName: 'Gómez', email: 'ana@example.com', experience: '3 años', score: 89 },
     { id: 3, firstName: 'Carlos', lastName: 'López', email: 'carlos@example.com', experience: '7 años', score: 97 },
   ]);
 
-  const [newJob, setNewJob] = useState({ title: '', company: '', location: '', description: '' });
+  const [newJob, setNewJob] = useState({
+    title: '',
+    company: '',
+    location: '',
+    experience: '',
+    education: '',
+    salary: '',
+    skills: '',
+    description: '',
+  });
 
   const handleAddJob = () => {
-    if (newJob.title && newJob.company && newJob.location && newJob.description) {
+    const { title, company, location, description } = newJob;
+    if (title && company && location && description) {
       setJobs([...jobs, { ...newJob, id: jobs.length + 1, status: 'open' }]);
-      setNewJob({ title: '', company: '', location: '', description: '' });
+      setNewJob({ title: '', company: '', location: '', experience: '', education: '', salary: '', skills: '', description: '' });
     }
   };
 
-  const handleCloseJob = (id) => {
+  const handleCloseJob = (id: number) => {
     setJobs(jobs.map(job => job.id === id ? { ...job, status: 'closed' } : job));
   };
 
@@ -60,7 +70,36 @@ export default function Dashboard() {
               onChange={(e) => setNewJob({ ...newJob, location: e.target.value })}
               className="p-3 rounded-lg border bg-gray-700 text-white w-full"
             />
+            <input
+              type="text"
+              placeholder="Experiencia requerida"
+              value={newJob.experience}
+              onChange={(e) => setNewJob({ ...newJob, experience: e.target.value })}
+              className="p-3 rounded-lg border bg-gray-700 text-white w-full"
+            />
+            <input
+              type="text"
+              placeholder="Estudios"
+              value={newJob.education}
+              onChange={(e) => setNewJob({ ...newJob, education: e.target.value })}
+              className="p-3 rounded-lg border bg-gray-700 text-white w-full"
+            />
+            <input
+              type="text"
+              placeholder="Salario"
+              value={newJob.salary}
+              onChange={(e) => setNewJob({ ...newJob, salary: e.target.value })}
+              className="p-3 rounded-lg border bg-gray-700 text-white w-full"
+            />
+            <input
+              type="text"
+              placeholder="Skills"
+              value={newJob.skills}
+              onChange={(e) => setNewJob({ ...newJob, skills: e.target.value })}
+              className="p-3 rounded-lg border bg-gray-700 text-white w-full"
+            />
           </div>
+
           <textarea
             placeholder="Descripción y requisitos del candidato..."
             value={newJob.description}
@@ -89,11 +128,11 @@ export default function Dashboard() {
                   title={job.title}
                   company={job.company}
                   location={job.location}
-                />
+                  description={job.description} experience={''} educationRequired={''} skillsRequired={''}                />
                 <p className="text-sm text-gray-400 mt-2">{job.description}</p>
                 <button 
                   onClick={(e) => {
-                    e.stopPropagation(); // Evita que haga click en toda la tarjeta
+                    e.stopPropagation();
                     handleCloseJob(job.id);
                   }} 
                   className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4 w-full"
@@ -111,7 +150,7 @@ export default function Dashboard() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {jobs.filter(job => job.status === 'closed').map((job) => (
               <div key={job.id} className="bg-gray-800 p-6 rounded-lg shadow-lg">
-                <JobCard title={job.title} company={job.company} location={job.location} />
+                <JobCard title={job.title} company={job.company} location={job.location} description={''} experience={''} educationRequired={''} skillsRequired={''} />
                 <p className="text-sm text-gray-400 mt-2">{job.description}</p>
                 <p className="text-green-400 font-semibold mt-4">📌 Vacante cerrada</p>
               </div>
