@@ -1,6 +1,9 @@
 import db from "../config/db";
 
 class JobController {
+    addJobDescription(jobDescription: any) {
+        throw new Error('Method not implemented.');
+    }
     serialize(job: any) {
         return {
             userId: job.userId || null,

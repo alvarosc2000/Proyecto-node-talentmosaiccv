@@ -15,7 +15,7 @@ const { Client } = require("pg");
 
 // Configuración de la base de datos
 const client = new Client({
-  connectionString: "postgresql://admin:admin@localhost:5432/talentmosaic", // Cambia esto si es necesario
+  connectionString: "postgresql://admin:admin@localhost:5432/talentmosaic",
 });
 
 const db = drizzle(client);
